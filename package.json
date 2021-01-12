@@ -1,0 +1,73 @@
+{
+  "name": "rtech-struct",
+  "version": "1.0.0",
+  "description": "Rtech Platform Superstruct Entity",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf node_modules && rm -rf nodered/node_modules",
+    "lint": "eslint --ext .js index.js structures test",
+    "lint:fix": "eslint --fix --ext .js index.js structures test",
+    "test": "TZ=utc jest --detectOpenHandles --forceExit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoctu/rtech-struct.git"
+  },
+  "dependencies": {
+    "is-email": "*",
+    "is-url": "*",
+    "is-uuid": "*",
+    "superstruct": "*",
+    "uuid": "*"
+  },
+  "devDependencies": {
+    "eslint": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
+    "eslint-plugin-node": "*",
+    "eslint-plugin-standard": "*",
+    "jest": "*"
+  },
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "modulePaths": [
+      "<rootDir>",
+      "/node_modules/"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "test/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "collectCoverageFrom": [
+      "*.js",
+      "structures/*.js",
+      "test/*.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "keywords": [
+    "Yoctu",
+    "Rtech",
+    "Superstruct",
+    "Entity",
+    "Platform",
+    "Logisitic"
+  ],
+  "author": "LaV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoctu/rtech-struct/issues"
+  },
+  "homepage": "https://github.com/yoctu/rtech-struct#readme"
+}
