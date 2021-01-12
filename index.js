@@ -1,6 +1,7 @@
 
 module.exports = {
   address: require('./structures/address').address,
+  auction: require('./structures/auction').auction(),
   contact: require('./structures/contact').contact,
   fleet: require('./structures/fleet').fleet,
   vehicle: require('./structures/fleet').vehicle,
