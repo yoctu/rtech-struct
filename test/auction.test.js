@@ -66,11 +66,19 @@ describe('Auction object structure', () => {
   let AuctionF2 = JSON.parse(JSON.stringify(Auctions[0]))
   AuctionF2.puContact = ["Doom Center", "Laurent", "NA", "0011111111"]
   test('Failed: Email Auction structure', () => {
-    const [err1, val1] = s.validate(AuctionF2, AuctionStruct, {
+    const [err2, val2] = s.validate(AuctionF2, AuctionStruct, {
       coerce: true
     })
-    expect(err1).toBeDefined()
-    expect(err1).toHaveProperty('type','Email')
-    expect(val1).toBeUndefined()
+    expect(err2).toBeDefined()
+    expect(err2).toHaveProperty('type','Email')
+    expect(val2).toBeUndefined()
+  })
+  let AuctionF3 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF3.puPlace= ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR", "Europe/Paris"],
+  test('Succes: PuPlace timezone string Auction structure', () => {
+    const [err3, val3] = s.validate(AuctionF3, AuctionStruct, {
+      coerce: true
+    })
+    expect(err3).toBeUndefined()
   })
 })
