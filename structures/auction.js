@@ -12,7 +12,7 @@ exports.auction = function (config = null) {
   if (config && config.app && config.app.usercodename) InstanceName = Instance
   if (config && config.shaq && config.shaq.relsmax) RelsMax = config.shaq.relsmax
 
-  return s.defaulted(s.masked(
+  return s.defaulted(
     s.type({
       id: s.optional(Uuid),
       type: s.string(),
@@ -56,7 +56,7 @@ exports.auction = function (config = null) {
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
       distance: s.optional(s.union([s.number(), s.string()])),
       notes: s.optional(s.size(s.string(), 2, 256))
-    })), {
+    }), {
     id: require('uuid').v4(),
     key: require('uuid').v4(),
     options: [],

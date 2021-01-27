@@ -37,7 +37,7 @@ const auction = {
 describe('Auction object structure', () => {
   test('Success: Auction structure', () => {
     const [err0, val0] = s.validate(auction, AuctionStruct, {
-      coerce: true
+	    coerce: true, mask: true
     })
 
     expect(err0).toBeUndefined()
@@ -48,7 +48,7 @@ describe('Auction object structure', () => {
   })
   test('Success: Default Auction structure', () => {
     const [err0, val0] = s.validate(Auctions[0], AuctionStruct, {
-      coerce: true
+      coerce: true, mask: true
     })
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
@@ -57,7 +57,7 @@ describe('Auction object structure', () => {
   AuctionF1.puContact = ["Doom Center", "Laurent", "lav@yoctu.com", "toto"]
   test('Failed: Phone Auction structure', () => {
     const [err1, val1] = s.validate(AuctionF1, AuctionStruct, {
-      coerce: true
+      coerce: true, mask: true
     })
     expect(err1).toBeDefined()
     expect(err1).toHaveProperty('type','string')
@@ -67,7 +67,7 @@ describe('Auction object structure', () => {
   AuctionF2.puContact = ["Doom Center", "Laurent", "NA", "0011111111"]
   test('Failed: Email Auction structure', () => {
     const [err2, val2] = s.validate(AuctionF2, AuctionStruct, {
-      coerce: true
+      coerce: true, mask: true
     })
     expect(err2).toBeDefined()
     expect(err2).toHaveProperty('type','Email')
@@ -77,7 +77,7 @@ describe('Auction object structure', () => {
   AuctionF3.puPlace= ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR", "Europe/Paris"],
   test('Succes: PuPlace timezone string Auction structure', () => {
     const [err3, val3] = s.validate(AuctionF3, AuctionStruct, {
-      coerce: true
+      coerce: true, mask: true
     })
     expect(err3).toBeUndefined()
   })

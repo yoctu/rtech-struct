@@ -18,7 +18,7 @@ describe('Fleet object structure', () => {
       provider: 'ftk',
       plate: '1803lv90'
     }, struct.vehicle, {
-      coerce: true
+      coerce: true, mask: true
     })
 
     expect(err0).toBeUndefined()
@@ -34,7 +34,7 @@ describe('Fleet object structure', () => {
     let [err1, val1] = s.validate({
       id: '1234567890'
     }, struct.vehicle, {
-      coerce: true
+      coerce: true, mask: true
     })
 
     expect(err1).toBeUndefined()
@@ -45,7 +45,7 @@ describe('Fleet object structure', () => {
     }, {
       id: '1234567891'
     }], struct.fleet, {
-      coerce: true
+      coerce: true, mask: true
     })
 
     expect(err2).toBeUndefined()
@@ -56,7 +56,7 @@ describe('Fleet object structure', () => {
     let [error, value] = s.validate({
       provider: 'tomtom'
     }, struct.vehicle, {
-      coerce: true
+      coerce: true, mask: true
     })
 
     expect(error).toHaveProperty('key', 'provider')
@@ -65,7 +65,7 @@ describe('Fleet object structure', () => {
       id: '1234567890',
       driver: 'a',
     }, struct.vehicle, {
-      coerce: true
+      coerce: true, mask: true
     })
 
     expect(error[0]).toHaveProperty('key', 'driver')

@@ -18,7 +18,8 @@ describe('Rels object structure', () => {
       key: 'DEMOEX',
       toto: 'because'
     }, struct.rel, {
-      coerce: true
+      coerce: true, 
+      mask: true
     })
 
     expect(error).toBeUndefined()
