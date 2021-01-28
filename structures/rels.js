@@ -4,7 +4,7 @@ const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
 const Domain = process.env.DNSDOMAIN || '.local'
 
 const Rel = s.defaulted(
-  s.type({
+  s.object({
     key: s.size(s.string(), 2, 32),
     name: s.optional(s.size(s.string(), 2, 64)),
     url: s.optional(Url),
