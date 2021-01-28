@@ -8,7 +8,7 @@ exports.contact = function (config = null) {
 }
 
 exports.fleet = function (config = null) {
-  return require('./structures/fleet').vehicle
+  return require('./structures/fleet').fleet
 }
 
 exports.vehicle = function (config = null) {
