@@ -42,3 +42,7 @@ exports.transport = function (config = null) {
 exports.auction = function (config = null) {
   return require('./structures/auction').auction(config)
 }
+
+exports.bid = function (config = null) {
+  return require('./structures/bid').bid(config)
+}
