@@ -52,7 +52,7 @@ exports.auction = function (config = null) {
       vehicles: s.optional(s.array(s.string())),
       incoterm: s.optional(s.enums(['EXW', 'CIP', 'FCA', 'DAP', 'DPU', 'CPT', 'DDP', 'FAS', 'CFR', 'FOB', 'CIF'])),
       transport: s.optional(s.array(s.string())),
-      dimension: s.optional(s.array(s.string())),
+      dimension: s.array(s.string()),
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
       distance: s.optional(s.union([s.number(), s.string()])),
       notes: s.optional(s.size(s.string(), 2, 256))
