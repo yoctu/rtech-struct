@@ -18,7 +18,7 @@ describe('Rels object structure', () => {
       key: 'DEMOEX',
       toto: 'because'
     }, struct.rel, {
-      coerce: true, 
+      coerce: true,
       mask: true
     })
 
@@ -28,7 +28,7 @@ describe('Rels object structure', () => {
       autoinvite: false,
       key: "DEMOEX",
       name: "DEMO",
-      url: "http://DEMO.local"
+      url: undefined
     })
 
     expect(s.is([{
