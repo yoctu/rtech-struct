@@ -11,7 +11,6 @@ const Rel = s.defaulted(
     autoinvite: s.optional(s.boolean())
   }), {
   name: Instance,
-  url: 'http://' + Instance + Domain,
   autoinvite: false
 })
 
