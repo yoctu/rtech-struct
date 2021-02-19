@@ -30,6 +30,7 @@ describe('Rels object structure', () => {
       key: "DEMOEX",
       name: "DEMO",
       timestamp: "2021-02-17T17:57:20.107Z",
+      visible: 'private',
       url: undefined
     })
 

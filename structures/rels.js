@@ -15,10 +15,12 @@ const Rel = s.defaulted(
     name: s.optional(s.size(s.string(), 2, 64)),
     url: s.optional(Url),
     timestamp: s.optional(ZoulouDate),
+    visible: s.optional(s.enums(['public','private'])),
     autoinvite: s.optional(s.boolean())
   }), {
   name: Instance,
   autoinvite: false,
+  visible: 'private',
   timestamp: new Date().toISOString()
 })
 
