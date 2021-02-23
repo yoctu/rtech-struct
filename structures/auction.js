@@ -3,6 +3,7 @@ const Uuid = s.define('Uuid', require('is-uuid').v4)
 const Url = s.define('Url', require('is-url'))
 const ZoulouDate = require('./lib').zouloudate(s)
 const Contact = require('./contact').auctionContact
+const Tz = s.define('Tz', require('timezone-validator'))
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
 
@@ -38,7 +39,7 @@ exports.auction = function (config = null) {
       bestbid: s.optional(Uuid),
       getitnow: s.optional(s.number()),
       winningbid: s.optional(Uuid),
-      puPlace: s.size(s.array(s.size(s.string(), 2, 256)), 5, 6),
+      puPlace: s.tuple([s.size(s.string(), 2, 128),s.size(s.string(), 1, 32),s.size(s.string(), 2, 64),s.size(s.string(), 2, 32),s.size(s.string(), 2, 32), s.optional(Tz)]),
       puLocation: s.optional(s.union([s.size(s.array(s.size(s.string(), 2, 32)), 0, 2), s.size(s.string(), 2, 64)])),
       puContact: s.optional(Contact),
       puDate: ZoulouDate,

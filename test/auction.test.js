@@ -81,4 +81,13 @@ describe('Auction object structure', () => {
     })
     expect(err3).toBeUndefined()
   })
+  let AuctionF4 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF4.puPlace= ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR", "My/Country"],
+  test('Failed: PuPlace unknown timezone string Auction structure', () => {
+    const [err4, val4] = s.validate(AuctionF4, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err4).toBeDefined()
+    expect(err4).toHaveProperty('type','Tz')
+  })
 })
