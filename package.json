@@ -22,9 +22,9 @@
     "uuid": "*"
   },
   "devDependencies": {
-    "eslint": "^7.20.0",
+    "eslint": "*",
     "eslint-plugin-import": "*",
-    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-jest": "*",
     "eslint-plugin-node": "*",
     "eslint-plugin-standard": "*",
     "jest": "*"
