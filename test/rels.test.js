@@ -16,6 +16,7 @@ describe('Rels object structure', () => {
 
     const [error, value] = s.validate({
       key: 'DEMOEX',
+      timestamp: "2021-02-17T17:57:20.107Z",
       toto: 'because'
     }, struct.rel, {
       coerce: true,
@@ -28,6 +29,8 @@ describe('Rels object structure', () => {
       autoinvite: false,
       key: "DEMOEX",
       name: "DEMO",
+      timestamp: "2021-02-17T17:57:20.107Z",
+      visible: 'private',
       url: undefined
     })
 
