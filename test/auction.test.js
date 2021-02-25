@@ -45,6 +45,7 @@ describe('Auction object structure', () => {
     for (const i of ['id', 'name', 'key']) {
         expect(val0).toHaveProperty(i)
     }
+    expect(val0.puPlace).toEqual(["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR"])
   })
   test('Success: Default Auction structure', () => {
     const [err0, val0] = s.validate(Auctions[0], AuctionStruct, {
@@ -89,5 +90,6 @@ describe('Auction object structure', () => {
     })
     expect(err4).toBeDefined()
     expect(err4).toHaveProperty('type','Tz')
+
   })
 })
