@@ -2,8 +2,9 @@ const s = require('superstruct')
 const Uuid = s.define('Uuid', require('is-uuid').v4)
 const Url = s.define('Url', require('is-url'))
 const ZoulouDate = require('./lib').zouloudate(s)
+const Place = require('./place').place(s)
+const PlaceTZ = require('./place').placeTZ(s)
 const Contact = require('./contact').auctionContact
-const Tz = s.define('Tz', require('timezone-validator'))
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
 
@@ -39,12 +40,12 @@ exports.auction = function (config = null) {
       bestbid: s.optional(Uuid),
       getitnow: s.optional(s.number()),
       winningbid: s.optional(Uuid),
-      puPlace: s.tuple([s.size(s.string(), 2, 128),s.size(s.string(), 1, 32),s.size(s.string(), 2, 64),s.size(s.string(), 2, 32),s.size(s.string(), 2, 32), s.optional(Tz)]),
+      puPlace: s.dynamic((v, p) => { return v.length === 5 ? Place : PlaceTZ }),
       puLocation: s.optional(s.union([s.size(s.array(s.size(s.string(), 2, 32)), 0, 2), s.size(s.string(), 2, 64)])),
       puContact: s.optional(Contact),
       puDate: ZoulouDate,
       puDateRange: s.optional(ZoulouDate),
-      dePlace: s.size(s.array(s.size(s.string(), 2, 256)), 5, 6),
+      dePlace: s.dynamic((v, p) => { return v.length === 5 ? Place : PlaceTZ }),
       deLocation: s.optional(s.union([s.size(s.array(s.size(s.string(), 2, 32)), 0, 2), s.size(s.string(), 2, 64)])),
       deContact: s.optional(Contact),
       deDate: ZoulouDate,
