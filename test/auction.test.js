@@ -45,6 +45,7 @@ describe('Auction object structure', () => {
     for (const i of ['id', 'name', 'key']) {
         expect(val0).toHaveProperty(i)
     }
+    expect(val0.puPlace).toEqual(["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR"])
   })
   test('Success: Default Auction structure', () => {
     const [err0, val0] = s.validate(Auctions[0], AuctionStruct, {
@@ -80,5 +81,15 @@ describe('Auction object structure', () => {
       coerce: true, mask: true
     })
     expect(err3).toBeUndefined()
+  })
+  let AuctionF4 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF4.puPlace= ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR", "My/Country"],
+  test('Failed: PuPlace unknown timezone string Auction structure', () => {
+    const [err4, val4] = s.validate(AuctionF4, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err4).toBeDefined()
+    expect(err4).toHaveProperty('type','Tz')
+
   })
 })

@@ -1,6 +1,6 @@
 {
   "name": "rtech-struct",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Rtech Platform Superstruct Entity",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "is-email": "*",
     "is-url": "*",
     "is-uuid": "*",
+    "timezone-validator": "*",
     "superstruct": "*",
     "uuid": "*"
   },
