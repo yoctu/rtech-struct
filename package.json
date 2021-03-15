@@ -1,6 +1,6 @@
 {
   "name": "rtech-struct",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Rtech Platform Superstruct Entity",
   "main": "index.js",
   "scripts": {
