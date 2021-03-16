@@ -90,6 +90,16 @@ describe('Auction object structure', () => {
     })
     expect(err4).toBeDefined()
     expect(err4).toHaveProperty('type','Tz')
-
+  })
+  let AuctionF5 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF5.targetOwner = ["ftaggart"]
+  AuctionF5.sourceOwner = ["llaffer"]
+  test('Success: target and source Owner Auction structure', () => {
+    const [err5, val5] = s.validate(AuctionF5, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err5).toBeUndefined()
+    expect(val5).toHaveProperty('targetOwner',['ftaggart'])
+    expect(val5).toHaveProperty('sourceOwner',['llaffer'])
   })
 })
