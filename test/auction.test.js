@@ -8,6 +8,7 @@ const Auctions = [{
   key: "jest-" + Math.round((new Date()).getTime()),
   source: ["DEMO"],
   target: ["DEMOEX"],
+  options: ['MULTISTEP'],
   puPlace: ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR"],
   puLocation: "49.4748422,5.9388295",
   puContact: ["Doom Center", "Laurent", "lav@yoctu.com", "+333333333"],
