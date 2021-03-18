@@ -4,7 +4,7 @@ const Url = s.define('Url', require('is-url'))
 const ZoulouDate = require('./lib').zouloudate(s)
 const Place = require('./place').place(s)
 const PlaceTZ = require('./place').placeTZ(s)
-const Multistep = require('./multistep').multistep
+const {multistep, packageV2, packageV1} = require('./multistep')
 const Contact = require('./contact').auctionContact
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
@@ -58,10 +58,17 @@ exports.auction = function (config = null) {
       incoterm: s.optional(s.enums(['EXW', 'CIP', 'FCA', 'DAP', 'DPU', 'CPT', 'DDP', 'FAS', 'CFR', 'FOB', 'CIF'])),
       transport: s.optional(s.array(s.string())),
       dimension: s.dynamic((v,p) => {
-          if (p.branch.some(e => e.hasOwnProperty('options') && e.options.includes('MULTISTEP'))) {
-              return Multistep
+          const options = p.branch.map(e => e.hasOwnProperty('options') ? e.options: [])[0]
+          switch (true) {
+              case options.includes('MULTISTEP'):
+                  return multistep
+              case options.includes('PKG_V1'):
+                  return packageV1
+              case options.includes('PKG_V2'):
+                  return packageV2
+              default:
+                  return s.optional(s.array(s.string()))
           }
-          return s.optional(s.array(s.string()))
       }),
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
       distance: s.optional(s.union([s.number(), s.string()])),
