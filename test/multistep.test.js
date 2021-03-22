@@ -4,19 +4,28 @@ const {multistep, packageV1, packageV2} = require('../structures/multistep')
 describe('Dimension structure', () => {
   test('Success: Mulstistep structure', () => {
     expect(s.is([
-      "1", "3",
-      "2", "100", "100", "100", "10", "", "no", "", "", "", "0", "1", "EG2102EF54-A-a",
-      "30 rue des romains", "57970", "yutz", "France", "FR", "49.35,6.18", "Test 1", "Test 1", "test1@test.test", "300000000", "2021-03-03T12:00:00.000Z",
-      "8 rue bellevue", "57600", "forbach", "France", "FR", "49.19, 6.89", "Test 2", "Test 2", "test2@test.test", "300000002", "2021-03-03T13:30:00.000Z",
-      "19 Rue Edmond Reuter", "5326", "Contern", "Luxembourg", "LU", "49.59,6.22", "Test 3", "Test 3", "test3@test.test", "300000003", "2021-03-03T15:30:00.000Z"
+      "2", "100", "100", "100", "10", "", "no", "", "", "0",
+      "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00",
+      "EG2103CF36-B", "14 RUE GORGE DE LOUP", "69009", "LYON", "France", "FR", "45.77,4.8041", "Europe/Paris", "test2", "test2", "test2@test.fr", "090809080908", "2021-03-01T01:00:00"
     ], multistep)).toBeTruthy()
   })
 
-  test('Failed: Mulstistep structure (missing an address)', () => {
+  test('Success: Mulstistep structure with 2 products', () => {
     expect(s.is([
-      "1", "1",
-      "2", "100", "100", "100", "10", "", "no", "", "", "", "0", "1", "EG2102EF54-A-a",
-      "30 rue des romains", "57970", "yutz", "France", "FR", "49.35,6.18", "Test 1", "Test 1", "test1@test.test", "300000000", "2021-03-03T12:00:00.000Z",
+      "2", "100", "100", "100", "10", "", "no", "", "", "0",
+      "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00",
+      "EG2103CF36-B", "14 RUE GORGE DE LOUP", "69009", "LYON", "France", "FR", "45.77,4.8041", "Europe/Paris", "test2", "test2", "test2@test.fr", "090809080908", "2021-03-01T01:00:00",
+      "2", "100", "100", "100", "10", "", "no", "", "", "0",
+      "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00",
+      "EG2103CF36-B", "14 RUE GORGE DE LOUP", "69009", "LYON", "France", "FR", "45.77,4.8041", "Europe/Paris", "test2", "test2", "test2@test.fr", "090809080908", "2021-03-01T01:00:00"
+    ], multistep)).toBeTruthy()
+  })
+
+  test('Failed: Mulstistep structure (missing a package field)', () => {
+    expect(s.is([
+      "2", "100", "100", "10", "", "no", "", "", "0",
+      "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00",
+      "EG2103CF36-B", "14 RUE GORGE DE LOUP", "69009", "LYON", "France", "FR", "45.77,4.8041", "Europe/Paris", "test2", "test2", "test2@test.fr", "090809080908", "2021-03-01T01:00:00"
     ], multistep)).toBeFalsy()
   })
 
