@@ -61,13 +61,13 @@ exports.auction = function (config = null) {
           const options = p.branch.map(e => e.hasOwnProperty('options') ? e.options: [])[0]
           switch (true) {
               case options.includes('MULTISTEP'):
-                  return multistep
+                  return multistep(config)
               case options.includes('PKG_V1'):
                   return packageV1
               case options.includes('PKG_V2'):
                   return packageV2
               default:
-                  return s.optional(s.array(s.string()))
+                  return packageV1
           }
       }),
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),

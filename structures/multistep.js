@@ -1,8 +1,12 @@
 const s = require('superstruct')
 
-const MAX_PKG = 50
+const Multistep = function (config = null) {
+  let MaxSteps = 50
+  if (config && config.shaq && config.shaq.maxsteps) MaxSteps = config.shaq.maxsteps
 
-const Multistep = s.size(s.array(s.string()), 36, 36*MAX_PKG)
+  return s.size(s.array(s.string()), 38, 38*MaxSteps)
+}
+
 const PackageV1 = s.size(s.array(s.string()), 6)
 const PackageV2 = s.size(s.array(s.string()), 9)
 
