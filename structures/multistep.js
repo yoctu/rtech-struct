@@ -7,8 +7,8 @@ const Multistep = function (config = null) {
   return s.size(s.array(s.string()), 38, 38*MaxSteps)
 }
 
-const PackageV1 = s.size(s.array(s.string()), 6)
-const PackageV2 = s.size(s.array(s.string()), 9)
+const PackageV1 = s.size(s.array(s.size(s.string(), 64)), 6)
+const PackageV2 = s.size(s.array(s.size(s.string(), 64)), 9)
 
 module.exports = {
   packageV1: PackageV1,

@@ -2,7 +2,7 @@ const s = require('superstruct')
 const {multistep, packageV1, packageV2} = require('../structures/multistep')
 
 describe('Dimension structure', () => {
-  test('Success: Mulstistep structure', () => {
+  test('Success: Multistep structure', () => {
     expect(s.is([
       "2", "100", "100", "100", "10", "", "no", "", "", "0",
       "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
@@ -10,7 +10,7 @@ describe('Dimension structure', () => {
     ], multistep())).toBeTruthy()
   })
 
-  test('Success: Mulstistep structure with 2 products', () => {
+  test('Success: Multistep structure with 2 products', () => {
     expect(s.is([
       "2", "100", "100", "100", "10", "", "no", "", "", "0",
       "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
@@ -21,7 +21,7 @@ describe('Dimension structure', () => {
     ], multistep())).toBeTruthy()
   })
 
-  test('Success: Mulstistep structure with 2 products but config for one', () => {
+  test('Success: Multistep structure with 2 products but config for one', () => {
     expect(s.is([
       "2", "100", "100", "100", "10", "", "no", "", "", "0",
       "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
@@ -32,7 +32,7 @@ describe('Dimension structure', () => {
     ], multistep({shaq: {maxsteps: 1}}))).toBeFalsy()
   })
 
-  test('Success: Mulstistep structure with 2 products and config for two', () => {
+  test('Success: Multistep structure with 2 products and config for two', () => {
     expect(s.is([
       "2", "100", "100", "100", "10", "", "no", "", "", "0",
       "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
@@ -43,7 +43,7 @@ describe('Dimension structure', () => {
     ], multistep({shaq: {maxsteps: 2}}))).toBeTruthy()
   })
 
-  test('Failed: Mulstistep structure (missing a package field)', () => {
+  test('Failed: Multistep structure (missing a package field)', () => {
     expect(s.is([
       "2", "100", "100", "10", "", "no", "", "", "0",
       "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
@@ -65,7 +65,7 @@ describe('Dimension structure', () => {
 
   test('Success: package v2 structure', () => {
     expect(s.is([
-      "1", "100", "120", "120","5", "no", "TOXIC LIQUID", "100", "Premium Inurance"
+      "1", "100", "120", "120","5", "no", "TOXIC LIQUID", "100", "Premium Insurance"
     ], packageV2)).toBeTruthy()
   })
 
