@@ -4,6 +4,7 @@ const Url = s.define('Url', require('is-url'))
 const ZoulouDate = require('./lib').zouloudate(s)
 const Place = require('./place').place(s)
 const PlaceTZ = require('./place').placeTZ(s)
+const {multistep, packageV2, packageV1} = require('./multistep')
 const Contact = require('./contact').auctionContact
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
@@ -29,7 +30,7 @@ exports.auction = function (config = null) {
       waybills: s.optional(s.size(s.string(), 8, 256)),
       creator: s.size(s.string(), 2, 32),
       visible: s.enums(['public', 'private']),
-      options: s.optional(s.array(s.enums(['SHAQUPLOAD', 'BIDUPLOAD', 'AUTOINVITE', 'BIDCOMMENT', 'NOCHAT', 'LITE', 'PRICE_DETAIL', 'SHOW_CONTACT', 'PKG_V1', 'PKG_V2']))),
+      options: s.optional(s.array(s.enums(['SHAQUPLOAD', 'BIDUPLOAD', 'AUTOINVITE', 'BIDCOMMENT', 'NOCHAT', 'LITE', 'PRICE_DETAIL', 'SHOW_CONTACT', 'PKG_V1', 'PKG_V2', 'MULTISTEP']))),
       source: s.size(s.array(s.size(s.string(), 2, 64)), 0, 1),
       target: s.size(s.array(s.size(s.string(), 2, 64)), 0, RelsMax),
       targetStatus: s.optional(s.size(s.array(s.enums(['', 'Removed', 'Disabled', 'Searching', 'NoSolution'])), 0, RelsMax)),
@@ -56,7 +57,19 @@ exports.auction = function (config = null) {
       vehicles: s.optional(s.array(s.string())),
       incoterm: s.optional(s.enums(['EXW', 'CIP', 'FCA', 'DAP', 'DPU', 'CPT', 'DDP', 'FAS', 'CFR', 'FOB', 'CIF'])),
       transport: s.optional(s.array(s.string())),
-      dimension: s.optional(s.array(s.string())),
+      dimension: s.dynamic((v,p) => {
+          const options = p.branch.map(e => e.hasOwnProperty('options') ? e.options: [])[0]
+          switch (true) {
+              case options.includes('MULTISTEP'):
+                  return multistep(config)
+              case options.includes('PKG_V1'):
+                  return packageV1
+              case options.includes('PKG_V2'):
+                  return packageV2
+              default:
+                  return packageV1
+          }
+      }),
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
       distance: s.optional(s.union([s.number(), s.string()])),
       notes: s.optional(s.size(s.string(), 2, 256))
