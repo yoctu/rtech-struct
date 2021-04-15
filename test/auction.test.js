@@ -137,4 +137,14 @@ describe('Auction object structure', () => {
     expect(val5).toHaveProperty('targetOwner',['ftaggart'])
     expect(val5).toHaveProperty('sourceOwner',['llaffer'])
   })
+  let AuctionF6 = JSON.parse(JSON.stringify(Auctions[0]))
+  delete AuctionF6.puPlace
+  test('Failed: missing puPlace auction structure', () => {
+    const [err6, val6] = s.validate(AuctionF6, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err6).toBeDefined()
+    expect(err6).toHaveProperty('key','puPlace')
+  })
+
 })
