@@ -14,7 +14,7 @@ exports.consts = function () {
 }
 
 exports.gpsarray = function (s){
-  return s.array(s.pattern(s.string(), /(-)?\d+\.\d+/))
+  return s.size(s.array(s.pattern(s.string(), /(-)?\d+\.\d+/)), 0, 2)
 }
 
 exports.gpsstring = function (s){
