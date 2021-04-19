@@ -2,6 +2,8 @@ const s = require('superstruct')
 const Uuid = s.define('Uuid', require('is-uuid').v4)
 const Url = s.define('Url', require('is-url'))
 const ZoulouDate = require('./lib').zouloudate(s)
+const GpsA = require('./lib').gpsarray(s)
+const GpsS = require('./lib').gpsstring(s)
 const Place = require('./place').place(s)
 const PlaceTZ = require('./place').placeTZ(s)
 const {multistep, packageV2, packageV1} = require('./multistep')
@@ -44,12 +46,12 @@ exports.auction = function (config = null) {
       getitnow: s.optional(s.number()),
       winningbid: s.optional(Uuid),
       puPlace: s.dynamic((v, p) => { return v.length === 5 ? Place : PlaceTZ }),
-      puLocation: s.optional(s.union([s.size(s.array(s.pattern(s.string(), /(-)?\d+\.\d+/)), 0, 2), s.pattern(s.string(), /(-)?\d+\.\d+,(-)?\d+\.\d+/)])),
+      puLocation: s.optional(s.union([s.size(GpsA, 0, 2), GpsS])),
       puContact: s.optional(Contact),
       puDate: ZoulouDate,
       puDateRange: s.optional(ZoulouDate),
       dePlace: s.dynamic((v, p) => { return v.length === 5 ? Place : PlaceTZ }),
-      deLocation: s.optional(s.union([s.size(s.array(s.pattern(s.string(), /(-)?\d+\.\d+/)), 0, 2), s.pattern(s.string(), /(-)?\d+\.\d+,(-)?\d+\.\d+/)])),
+      deLocation: s.optional(s.union([s.size(GpsA, 0, 2), GpsS])),
       deContact: s.optional(Contact),
       deDate: ZoulouDate,
       deDateRange: s.optional(ZoulouDate),
