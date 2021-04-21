@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const { Tz } = require('./lib')
+const GpsS = require('./lib').gpsstring(s)
 
 const Address = s.object({
   street: s.size(s.string(), 1, Infinity),
@@ -10,6 +10,8 @@ const Address = s.object({
   country: s.size(s.string(), 2, 2),
   position: s.pattern(s.string(), /(-)?\d+\.\d+,(-)?\d+\.\d+/),
   timezone_string: Tz
+  position: GpsS,
+  timezone_string: s.size(s.string(), 1, Infinity)
 })
 
 module.exports = {
