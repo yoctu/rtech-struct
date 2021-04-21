@@ -1,5 +1,6 @@
 const s = require('superstruct')
 const GpsS = require('./lib').gpsstring(s)
+const { Tz } = require('./lib')
 
 const Address = s.object({
   street: s.size(s.string(), 1, Infinity),
