@@ -12,3 +12,11 @@ exports.phone = function (s) {
 exports.consts = function () {
   return { zdReg, pReg }
 }
+
+exports.gpsarray = function (s){
+  return s.size(s.array(s.pattern(s.string(), /(-)?\d+\.\d+/)), 0, 2)
+}
+
+exports.gpsstring = function (s){
+  return s.pattern(s.string(), /(-)?\d+\.\d+,(-)?\d+\.\d+/)
+}
