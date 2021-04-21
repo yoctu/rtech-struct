@@ -1,5 +1,7 @@
 const Index = require('../index')
-const ConstStruct = require('../structures/lib').consts()
+const s = require('superstruct')
+const { Tz, consts } = require('../structures/lib')
+const ConstStruct = consts()
 
 describe('Lib Phone object structure', () => {
   test('Success: Lib Phone structure', () => {
@@ -24,5 +26,15 @@ describe('Lib Zoulou Date object structure', () => {
     for (const i of ['??!!', 'toto', '2021-01-11T10:31:04']) {
       expect(RegExp(ConstStruct.zdReg).test(i)).toBeFalsy()
     }
+  })
+})
+
+describe('Time zone string format', () => {
+  test('Success: Tz is valid', () => {
+    expect(s.is('Europe/Paris', Tz)).toBeTruthy()
+  })
+
+  test('Fail: Tz is no valid', () => {
+    expect(s.is('America/Bulp', Tz)).toBeFalsy()
   })
 })
