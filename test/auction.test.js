@@ -147,14 +147,24 @@ describe('Auction object structure', () => {
     expect(err6).toBeDefined()
     expect(err6).toHaveProperty('key','puPlace')
   })
+
   let AuctionF7 = JSON.parse(JSON.stringify(Auctions[0]))
-  AuctionF7.extras = ['2ND_DRIVER']
-  test('Failed: Auction extra structure', () => {
+  test('Success: Auction with empty extra structure', () => {
     const [err2, val2] = s.validate(AuctionF7, AuctionStruct, {
       coerce: true, mask: true
     })
     expect(err2).toBeUndefined()
-    expect(val2).toBeDefined()
+    expect(val2).toHaveProperty('extras')
   })
 
+  let AuctionF8 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF8.extras = ['2ND_DRIVER', 'OTHER_EXTRA']
+  test('Success: Auction extra structure', () => {
+    const [err2, val2] = s.validate(AuctionF8, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err2).toBeUndefined()
+    expect(val2).toBeDefined()
+    expect(val2).toHaveProperty('extras', ['2ND_DRIVER', 'OTHER_EXTRA'])
+  })
 })
