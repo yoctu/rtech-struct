@@ -59,7 +59,8 @@ const auction = {
   puDate: new Date(new Date().setDate((new Date().getDate() + 1))).toISOString(),
   dePlace: ["8 rue de surene", "75008", "Paris", "France", "FR"],
   deDate: new Date(new Date().setDate((new Date().getDate() + 2))).toISOString(),
-  dimension: ["1", "100", "120", "120", "5", "no"]
+  dimension: ["1", "100", "120", "120", "5", "no"],
+  extras: ['2ND_DRIVER']
 }
 
 describe('Auction object structure', () => {
@@ -145,6 +146,15 @@ describe('Auction object structure', () => {
     })
     expect(err6).toBeDefined()
     expect(err6).toHaveProperty('key','puPlace')
+  })
+  let AuctionF7 = JSON.parse(JSON.stringify(Auctions[0]))
+  AuctionF7.extras = ['2ND_DRIVER']
+  test('Failed: Auction extra structure', () => {
+    const [err2, val2] = s.validate(AuctionF7, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err2).toBeUndefined()
+    expect(val2).toBeDefined()
   })
 
 })

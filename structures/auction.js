@@ -49,6 +49,7 @@ exports.auction = function (config = null) {
       puLocation: s.optional(s.union([GpsA, GpsS])),
       puContact: s.optional(Contact),
       puDate: ZoulouDate,
+      extras: s.optional(s.array(s.string())),
       puDateRange: s.optional(ZoulouDate),
       dePlace: s.dynamic((v, p) => { return v && v.length === 5 ? Place : PlaceTZ }),
       deLocation: s.optional(s.union([GpsA, GpsS])),
