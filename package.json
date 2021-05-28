@@ -1,6 +1,6 @@
 {
   "name": "rtech-struct",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Rtech Platform Superstruct Entity",
   "main": "index.js",
   "scripts": {
@@ -17,16 +17,16 @@
     "is-email": "*",
     "is-url": "*",
     "is-uuid": "*",
-    "superstruct": "*",
+    "superstruct": "^0.15.2",
     "uuid": "*"
   },
   "devDependencies": {
-    "eslint": "*",
-    "eslint-plugin-import": "*",
-    "eslint-plugin-jest": "*",
+    "eslint": "^7.27.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-node": "*",
     "eslint-plugin-standard": "*",
-    "jest": "*"
+    "jest": "^27.0.1"
   },
   "engines": {
     "node": ">= 14.0.0",

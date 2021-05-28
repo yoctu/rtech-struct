@@ -57,6 +57,12 @@ describe('Dimension structure', () => {
     ], packageV1)).toBeTruthy()
   })
 
+  test('Success: package v1 structure with 2 products', () => {
+    expect(s.is([
+      "1", "100", "120", "120","5", "no", "1", "100", "120", "120","5", "no"
+    ], packageV1)).toBeTruthy()
+  })
+
   test('Failed: package v1 structure', () => {
     expect(s.is([
       "1", "no"
