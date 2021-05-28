@@ -17,16 +17,16 @@
     "is-email": "*",
     "is-url": "*",
     "is-uuid": "*",
-    "superstruct": "^0.15.2",
+    "superstruct": "*",
     "uuid": "*"
   },
   "devDependencies": {
-    "eslint": "^7.27.0",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
     "eslint-plugin-node": "*",
     "eslint-plugin-standard": "*",
-    "jest": "^27.0.1"
+    "jest": "*"
   },
   "engines": {
     "node": ">= 14.0.0",
