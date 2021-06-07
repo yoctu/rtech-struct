@@ -71,7 +71,7 @@ describe('Bid object structure', () => {
 
   test('Success: Bid structure with Yes as loaded', () => {
     let payload = JSON.parse(JSON.stringify(Bids[0]));
-    payload.loaded = "No";
+    payload.loaded = "Yes";
     const [err0, val0] = s.validate(payload, BidStruct, {
       coerce: true, mask: true
     })
