@@ -7,8 +7,7 @@ const Config = {
   app: {
     validatoremail: "shaq@yoctu.com",
     logourl: "https://yoctu.github.io/shaq-view/img/"
-  },
-  score: [ "1", "1", "1" ],
+  }
 }
 
 const Auctions = [{
@@ -39,7 +38,8 @@ const Auctions = [{
 
 const BidStruct = require('../structures/bid').bid()
 const BidStructAuction = require('../structures/bid').bid(null, Auctions[0])
-const BidStructConfig = require('../structures/bid').bid(Config, null)
+const BidStructConfigScoreStrings = require('../structures/bid').bid({...Config, ...{score: [ "1", "5", "2" ]}}, null)
+const BidStructConfigScoreNumbers = require('../structures/bid').bid({...Config, ...{score: [ 1, 15, 6 ]}}, null)
 const BidStructAuctionConfig = require('../structures/bid').bid(Config, Auctions[0])
 
 const Bids = [{
@@ -97,10 +97,22 @@ describe('Bid object structure', () => {
     expect(val0).toBeDefined()
   })
 
-  test('Success: Bid structure with Config', () => {
-    const [err0, val0] = s.validate(Bids[0], BidStructConfig, {
+  test('Success: Bid structure with BidStructConfigScoreStrings', () => {
+
+    const [err0, val0] = s.validate(Bids[0], BidStructConfigScoreStrings, {
 	    coerce: true, mask: true
     })
+
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with BidStructConfigScoreNumbers', () => {
+
+    const [err0, val0] = s.validate(Bids[0], BidStructConfigScoreNumbers, {
+      coerce: true, mask: true
+    })
+
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
   })

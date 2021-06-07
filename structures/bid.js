@@ -51,7 +51,7 @@ exports.bid = function(config = null, auction = null) {
       loaded: s.optional(s.enums(["Yes", "No"])),
       tracker: s.optional(s.string()),
       driver: s.optional(s.string()),
-      score: s.optional(s.array(s.string())),
+      score: s.optional(s.array(s.union([s.number(), s.string()]))),
       tms: s.optional(s.string()),
       price: s.union([s.number(), s.string()]),
       priceDetails: s.optional(s.array(s.string()))
