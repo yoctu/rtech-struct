@@ -8,7 +8,7 @@ const Config = {
     validatoremail: "shaq@yoctu.com",
     logourl: "https://yoctu.github.io/shaq-view/img/"
   },
-  score: [ 1, 1, 1 ],
+  score: [ "1", "1", "1" ],
 }
 
 const Auctions = [{
@@ -57,6 +57,36 @@ describe('Bid object structure', () => {
     })
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with No as loaded', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = "No";
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with Yes as loaded', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = "No";
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with loaded has invalid value', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = false;
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeDefined()
+    expect(val0).toBeUndefined()
   })
 
   test('Success: Bid structure with Auction', () => {

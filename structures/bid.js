@@ -7,7 +7,7 @@ const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
 
 exports.bid = function(config = null, auction = null) {
   let InstanceName = Instance
-  let Score = [ 0, 0 , 0 ]
+  let Score = [ "0", "0" , "0" ]
   let Rating = 3
   let Validatoremail = "shaq@yoctu.com"
   let Logo = 'https://www.yoctu.com/wp-content/themes/yoctu/images/logo.svg'
@@ -48,10 +48,10 @@ exports.bid = function(config = null, auction = null) {
       lang: s.optional(s.string()),
       forwarder: s.optional(s.string()),
       decision_maker: s.optional(s.string()),
-      loaded: s.optional(s.boolean()),
+      loaded: s.optional(s.enums(["Yes", "No"])),
       tracker: s.optional(s.string()),
       driver: s.optional(s.string()),
-      score: s.optional(s.array(s.number())),
+      score: s.optional(s.array(s.string())),
       tms: s.optional(s.string()),
       price: s.union([s.number(), s.string()]),
       priceDetails: s.optional(s.array(s.string()))
