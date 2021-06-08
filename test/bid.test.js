@@ -7,8 +7,7 @@ const Config = {
   app: {
     validatoremail: "shaq@yoctu.com",
     logourl: "https://yoctu.github.io/shaq-view/img/"
-  },
-  score: [ 1, 1, 1 ],
+  }
 }
 
 const Auctions = [{
@@ -39,7 +38,8 @@ const Auctions = [{
 
 const BidStruct = require('../structures/bid').bid()
 const BidStructAuction = require('../structures/bid').bid(null, Auctions[0])
-const BidStructConfig = require('../structures/bid').bid(Config, null)
+const BidStructConfigScoreStrings = require('../structures/bid').bid({...Config, ...{score: [ "1", "5", "2" ]}}, null)
+const BidStructConfigScoreNumbers = require('../structures/bid').bid({...Config, ...{score: [ 1, 15, 6 ]}}, null)
 const BidStructAuctionConfig = require('../structures/bid').bid(Config, Auctions[0])
 
 const Bids = [{
@@ -59,6 +59,36 @@ describe('Bid object structure', () => {
     expect(val0).toBeDefined()
   })
 
+  test('Success: Bid structure with No as loaded', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = "No";
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with Yes as loaded', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = "Yes";
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with loaded has invalid value', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.loaded = false;
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeDefined()
+    expect(val0).toBeUndefined()
+  })
+
   test('Success: Bid structure with Auction', () => {
     const [err0, val0] = s.validate(Bids[0], BidStructAuction, {
 	    coerce: true, mask: true
@@ -67,10 +97,22 @@ describe('Bid object structure', () => {
     expect(val0).toBeDefined()
   })
 
-  test('Success: Bid structure with Config', () => {
-    const [err0, val0] = s.validate(Bids[0], BidStructConfig, {
+  test('Success: Bid structure with BidStructConfigScoreStrings', () => {
+
+    const [err0, val0] = s.validate(Bids[0], BidStructConfigScoreStrings, {
 	    coerce: true, mask: true
     })
+
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with BidStructConfigScoreNumbers', () => {
+
+    const [err0, val0] = s.validate(Bids[0], BidStructConfigScoreNumbers, {
+      coerce: true, mask: true
+    })
+
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
   })
