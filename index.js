@@ -1,48 +1,37 @@
+const { address } = require('./structures/address')
+const { contact, auctionContact } = require('./structures/contact')
+const { fleet } = require('./structures/fleet')
+const { vehicle } = require('./structures/fleet')
+const { rel, rels } = require('./structures/rels')
+const { point, package: packageFn, transport } = require('./structures/transport')
+const { auction } = require('./structures/auction')
+const { bid } = require('./structures/bid')
+const { filter, filters } = require('./structures/filter')
 
-exports.address = function (config = null) {
-  return require('./structures/address').address
-}
+exports.address = () => address
 
-exports.contact = function (config = null) {
-  return require('./structures/contact').contact
-}
+exports.contact = () => contact
 
-exports.fleet = function (config = null) {
-  return require('./structures/fleet').fleet
-}
+exports.fleet = () => fleet
 
-exports.vehicle = function (config = null) {
-  return require('./structures/fleet').vehicle
-}
+exports.vehicle = () => vehicle
 
-exports.auctionContact = function (config = null) {
-  return require('./structures/contact').auctionContact
-}
+exports.auctionContact = () => auctionContact
 
-exports.rel = function (config = null) {
-  return require('./structures/rels').rel
-}
+exports.rel = () => rel
 
-exports.rels = function (config = null) {
-  return require('./structures/rels').rels
-}
+exports.rels = () => rels
 
-exports.point = function (config = null) {
-  return require('./structures/transport').point
-}
+exports.point = () => point
 
-exports.package = function (config = null) {
-  return require('./structures/transport').package
-}
+exports.package = () => packageFn
 
-exports.transport = function (config = null) {
-  return require('./structures/transport').transport
-}
+exports.transport = () => transport
 
-exports.auction = function (config = null) {
-  return require('./structures/auction').auction(config)
-}
+exports.auction = config => auction(config)
 
-exports.bid = function (config = null) {
-  return require('./structures/bid').bid(config)
-}
+exports.bid = config => bid(config)
+
+exports.filter = () => filter
+
+exports.filters = () => filters
