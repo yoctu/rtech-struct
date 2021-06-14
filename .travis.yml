@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - 12
   - 14
 
 install:
@@ -8,6 +7,9 @@ install:
 
 script:
   - npm test
+
+before_deploy:
+  - npm --no-git-tag-version --allow-same-version version $TRAVIS_TAG
 
 deploy:
   - provider: npm
