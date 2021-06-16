@@ -125,4 +125,23 @@ describe('Bid object structure', () => {
     expect(val0).toBeDefined()
   })
 
+  test('Success: Bid structure with puPlace with no values', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.puPlace = ['', '', '', '', 'FR'];
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
+
+  test('Success: Bid structure with dePlace with no values', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.dePlace = ['', '', '', '', 'FR'];
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
 })
