@@ -144,4 +144,14 @@ describe('Bid object structure', () => {
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
   })
+
+  test('Success: Bid structure with logo as a path', () => {
+    let payload = JSON.parse(JSON.stringify(Bids[0]));
+    payload.logo = '/assets/img/flash_logo.png';
+    const [err0, val0] = s.validate(payload, BidStruct, {
+      coerce: true, mask: true
+    })
+    expect(err0).toBeUndefined()
+    expect(val0).toBeDefined()
+  })
 })
