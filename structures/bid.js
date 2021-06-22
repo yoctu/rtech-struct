@@ -34,7 +34,7 @@ exports.bid = function(config = null, auction = null) {
       targetComment: s.optional(s.size(s.array(s.size(s.string(), 2, 256)), 0, 8)),
       targetRating: s.optional(s.size(s.number(), 0, 5)),
       bidRating: s.optional(s.size(s.number(), 0, 5)),
-      logo: s.optional(Url),
+      logo: s.optional(s.string()), //TODO: determine the format for all
       validatorEmails: s.optional(Email),
       currency: s.enums(['EUR', 'DOLLAR']),
       puPlace: s.optional(s.size(s.array(s.size(s.string(), 0, 256)), 5, 6)),
