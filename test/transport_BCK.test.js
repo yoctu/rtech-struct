@@ -1,58 +1,21 @@
 const s = require('superstruct')
-const struct = require('../structures/transport')
+const struct = require('../structures/transport_BCK')
 
 const transport = {
-  id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
+  id: 'thisisanid',
+  type: 'transport',
   key: 'abeautifullkey',
-  carrier: {
-    id: 'anID',
-    drivers:
-      [{
-        phone: '+352 42 42 42',
-        name: 'Driver name'
-      }],
-    vehicle: {
-      last_position: {
-        latitude: '49.221935',
-        longitude: '6.217841'
-      },
-      tracking_provider: 'tracking',
-      plate: 'AB 123 CD',
-      information: 'blabla',
-      type: 'transport',
-      brand: 'Volvo'
-    }
-  },
-  distances: [1.5, 2, 3.4],
-  waybill: 'https://traking.com/waybill',
-  incoterm: 'bloop',
-  source: 'Evian',
-  packages: [{
-    owner: 'owner',
-    stackable: 'no',
-    quantity: 1,
-    references: ['ref1', 'ref2'],
-    width: 50,
-    length: 50,
-    height: 50,
-    weight: 3.3,
-    type: 'parcel',
-    adr: {
-      un_code: 'un_code',
-      class: '1',
-      packing_group: '2'
-    },
-    comment: 'commentary',
-    good_value: {
-      currency: 'USD',
-      value: 42.42
-    },
-    tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
-    status: 'waiting_for_pickup'
-  }],
-  tracking_url: 'https://traking.com/track',
+  shippers: ['DEMO'],
+  shippers_name: ['Demo corp.'],
+  creator: 'TMS',
   status: 'running',
-  points: [{
+  timestamp: '2020-09-24T08:00:00Z',
+  tracking_url: 'https://traking.com/track',
+  waybills: 'https://traking.com/waybill',
+  archived_at: '2020-09-27T08:00:00Z',
+  starting_point: {
+    arrival_at: '2020-09-25T08:00:00Z',
+    departure_at: '2020-09-25T10:00:00Z',
     address: {
       street: '34 Rue Jacques Marjorelle',
       additional_street: 'en face du 35',
@@ -61,24 +24,63 @@ const transport = {
       country: 'FR',
       province: 'Moselle',
       position: '49.221935,6.217841',
-      timezone: 'Europe/Paris'
+      timezone_string: 'Europe/Paris'
     },
-    real_departure: '2020-09-25T08:00:00Z',
     contact: {
-      phone: '+352 42 42 42',
-      company_name: 'Pizza Express',
-      name: 'Woody',
-      email: 'morty@schmidt.com'
+      company: 'Redspher',
+      name: 'Vincent Simonin',
+      phone: '+33 6 61 10 32 29',
+      email: 'vincent.simonin@redspher.com'
+    }
+  },
+  destination_point: {
+    arrival_at: '2020-09-26T08:00:00Z',
+    departure_at: '2020-09-26T10:00:00Z',
+    address: {
+      street: 'Via San Vittore, 21',
+      city: 'Milan',
+      zip_code: '20123',
+      country: 'IT',
+      timezone_string: 'Europe/Paris',
+      position: '45.463762,9.169678'
     },
-    packages_to_load: ['42b05af4-b74c-4307-b3f7-b795d2df6ec2', 'f462f860-4230-43c9-8fe7-2fcbfd03b080'],
-    arrival_from: '2020-09-25T08:00:00Z',
-    comment: 'commentary',
-    id: 'd996f34e-d849-41a9-a691-bd9834f63eed',
-    real_arrival: '2020-09-25T08:00:00Z',
-    packages_to_unload: ['42b05af4-b74c-4307-b3f7-b795d2df6ec2', 'f462f860-4230-43c9-8fe7-2fcbfd03b080'],
-    arrival_until: '2020-09-25T08:00:00Z'
-  }]
-};
+    contact: {
+      company: 'Yoctu',
+      name: 'Laurent Venier',
+      phone: '+33 6 61 10 32 30',
+      email: 'lav@yoctu.com'
+    }
+  },
+  packages_loaded: [
+    {
+      shipper: 'DEMO',
+      width: '50',
+      length: 50,
+      height: '50',
+      weight: 3.3,
+      quantity: 1,
+      stackable: false,
+      track_id: 'test1',
+      status: 'waiting_for_pickup'
+    },
+    {
+      shipper: 'DEMO',
+      width: 70,
+      length: 84,
+      height: 94,
+      weight: 9,
+      quantity: 1,
+      stackable: true,
+      track_id: 'test2',
+      status: 'waiting_for_pickup'
+    }
+  ],
+  vehicle: 'AA-123-BB',
+  vehicle_type: 'break',
+  vehicle_tracking_provider: 'ftk',
+  vehicle_owner: 'DEMOEX',
+  vehicle_owner_name: 'FLASH'
+}
 
 describe('Transport object structure', () => {
   test('Success: Transport structure', () => {
@@ -89,7 +91,7 @@ describe('Transport object structure', () => {
     const [error, entity] = s.validate({}, struct.transport)
 
     for (const failure of error.failures()) {
-      expect(['id', 'key', 'carrier', 'status', 'packages', 'points', 'source']).toEqual(expect.arrayContaining(failure.path))
+      expect(['id', 'type', 'key', 'shippers', 'status', 'timestamp', 'status', 'creator', 'starting_point', 'destination_point', 'packages_loaded', 'vehicle', 'vehicle_type']).toEqual(expect.arrayContaining(failure.path))
     }
   })
 
@@ -298,6 +300,22 @@ describe('Transport object structure', () => {
     entity = s.create(t, struct.transport)
 
     expect(entity).toHaveProperty('id')
+
+    expect(s.is(entity, struct.transport)).toBeTruthy()
+  })
+
+  test('Success: Transport structure type is defaulted to `transport`', () => {
+    let t = JSON.parse(JSON.stringify(transport))
+
+    let entity = s.create(t, struct.transport)
+
+    expect(entity).toHaveProperty('type', 'transport')
+
+    delete t.type
+
+    entity = s.create(t, struct.transport)
+
+    expect(entity).toHaveProperty('type', 'transport')
 
     expect(s.is(entity, struct.transport)).toBeTruthy()
   })

@@ -1,72 +1,125 @@
-const s = require('superstruct')
-const Contact = require('./contact').contact
-const Address = require('./address').address
-const Url = s.define('Url', require('is-url'))
+const s = require('superstruct');
+const v4 = require('uuid').v4();
+const isUuid = require('is-uuid');
+const isEmail = require('is-email');
+const { Tz } = require('./lib');
 
-const Integer = s.define('Integer', (value) => {
-  return typeof value === 'number' && value.toString().match(/^\d+$/) !== null
-})
+const Uuid = s.define('Uuid', (value) => isUuid.v4(value));
+const Email = s.define('Email', isEmail());
 
-const toZoulouDate = value => {
-  return value.slice(-1) !== 'Z' ? value + 'Z' : value
-}
+const zdReg = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
 
-const ZoulouDate = require('./lib').zouloudate(s)
+const Driver = s.object({
+  phone: s.optional(s.string()),
+  name: s.optional(s.string())
+});
 
-const Point = s.object({
-  arrival_at: s.coerce(ZoulouDate, s.string(), toZoulouDate),
-  departure_at: s.coerce(ZoulouDate, s.string(), toZoulouDate),
-  arrival_at_range: s.optional(s.string()),
-  departure_at_range: s.optional(s.string()),
-  address: Address,
-  contact: s.optional(Contact)
-})
+const Position = s.object({
+  latitude: s.nullable(s.number()),
+  longitude: s.nullable(s.number())
+});
+
+const Vehicle = s.object({
+  last_position: s.optional(Position),
+  tracking_provider: s.string(),
+  plate: s.size(s.string(), 4, 10),
+  information: s.optional(s.string()),
+  type: s.string(),
+  brand: s.optional(s.string())
+});
+
+const Carrier = s.object({
+  id: s.string(),
+  drivers: s.optional(s.array(Driver)),
+  vehicle: Vehicle
+});
+
+const ADR = s.object({
+  un_code: s.optional(s.string()),
+  class: s.optional(s.string()),
+  packing_group: s.optional(s.string())
+});
+
+const GoodValue = s.object({
+  currency: s.optional(s.string()),
+  value: s.nullable(s.number())
+});
 
 const Package = s.object({
-  shipper: s.size(s.string(), 2, Infinity),
-  width: s.union([s.number(), s.pattern(s.string(), /^\d+(\.\d+)?$/)]),
-  length: s.union([s.number(), s.pattern(s.string(), /^\d+(\.\d+)?$/)]),
-  height: s.union([s.number(), s.pattern(s.string(), /^\d+(\.\d+)?$/)]),
-  weight: s.union([s.number(), s.pattern(s.string(), /^\d+(\.\d+)?$/)]),
-  quantity: s.defaulted(s.union([Integer, s.pattern(s.string(), /^\d+$/)]), 1),
-  status: s.defaulted(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered']), 'waiting_for_pickup'),
-  reference: s.optional(s.size(s.string(), 1, Infinity)),
-  track_id: s.defaulted(s.string(), value => {
-    return require('uuid').v4()
-  }),
-  stackable: s.defaulted(s.boolean(), false)
-})
+  owner: s.string(),
+  stackable: s.optional(s.defaulted(s.enums(['no', '1', '2', '3', '4']), 'no')),
+  quantity: s.defaulted(s.nullable(s.integer()), 1),
+  references: s.optional(s.array(s.string())),
+  length: s.nullable(s.number()),
+  weight: s.nullable(s.number()),
+  type: s.optional(s.defaulted(s.enums(['parcel', 'pallet']), 'parcel')),
+  adr: s.optional(ADR),
+  width: s.nullable(s.number()),
+  comment: s.optional(s.string()),
+  good_value: s.optional(GoodValue),
+  tracking_id: Uuid,
+  height: s.nullable(s.number()),
+  status: s.defaulted(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered']), 'waiting_for_pickup')
+});
+
+const Address = s.object({
+  additional_street: s.optional(s.string()),
+  country: s.string(),
+  city: s.string(),
+  street: s.string(),
+  timezone: Tz,
+  position: Position,
+  zip_code: s.string()
+});
+
+const Contact = s.object({
+  phone: s.optional(s.string()),
+  company_name: s.string(),
+  name: s.optional(s.string()),
+  email: s.optional(Email)
+});
+
+const toDateTime = value => {
+  return value.slice(-1) !== 'Z' ? value + 'Z' : value;
+};
+
+const Point = s.object({
+  address: Address,
+  real_departure: s.optional(s.coerce(s.pattern(s.date(), zdReg), s.string(), toDateTime)),
+  contact: Contact,
+  packages_to_load: s.array(Uuid),
+  arrival_from: s.coerce(s.pattern(s.date(), zdReg), s.string(), toDateTime),
+  comment: s.optional(s.string()),
+  id: s.defaulted(Uuid, () => { new v4(); }),
+  real_arrival: s.optional(s.coerce(s.pattern(s.date(), zdReg), s.string(), toDateTime)),
+  packages_to_unload: s.array(Uuid),
+  arrival_until: s.optional(s.coerce(s.pattern(s.date(), zdReg), s.string(), toDateTime))
+});
 
 const Transport = s.object({
-  id: s.defaulted(s.string(), value => {
-    return require('uuid').v4()
-  }),
-  type: s.defaulted(s.pattern(s.string(), /transport/), value => {
-    return 'transport'
-  }),
-  key: s.size(s.string(), 8, Infinity),
-  shippers: s.size(s.array(s.size(s.string(), 2, Infinity)), 1, Infinity),
-  shippers_name: s.optional(s.size(s.array(s.size(s.string(), 2, Infinity)), 1, Infinity)),
+  id: s.defaulted(Uuid, () => { new v4(); }),
+  key: s.string(),
+  carrier: Carrier,
+  distances: s.optional(s.array(s.nullable(s.number()))),
+  waybill: s.optional(s.string()),
+  incoterm: s.optional(s.string()),
+  source: s.string(),
+  packages: s.array(Package),
+  tracking_url: s.optional(s.string()),
   status: s.defaulted(s.enums(['planned', 'cancelled', 'running', 'completed', 'expired']), 'planned'),
-  timestamp: s.defaulted(ZoulouDate, () => (new Date()).toISOString()),
-  archived_at: s.optional(ZoulouDate),
-  tracking_url: s.optional(Url),
-  waybills: s.optional(s.size(s.string(), 8, Infinity)),
-  creator: s.size(s.string(), 2, Infinity),
-  starting_point: Point,
-  destination_point: Point,
-  packages_loaded: s.size(s.array(Package), 1, Infinity),
-  vehicle: s.size(s.string(), 2, Infinity),
-  vehicle_type: s.size(s.string(), 2, Infinity),
-  vehicle_owner: s.optional(s.size(s.string(), 2, Infinity)),
-  vehicle_owner_name: s.optional(s.size(s.string(), 2, Infinity)),
-  vehicle_tracking_provider: s.optional(s.size(s.string(), 3, Infinity))
-})
+  points: s.array(Point)
+});
 
 module.exports = {
+  driver: Driver,
+  position: Position,
+  vehicle: Vehicle,
+  carrier: Carrier,
+  adr: ADR,
+  goodvalue: GoodValue,
+  package: Package,
   address: Address,
   contact: Contact,
   point: Point,
-  package: Package,
   transport: Transport
-}
+};
