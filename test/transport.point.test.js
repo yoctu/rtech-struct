@@ -1,7 +1,7 @@
 const s = require('superstruct')
 const struct = require('../structures/transport')
 
-describe('Transport object structure', () => {
+describe('Point object structure', () => {
   test('Success: Point structure', () => {
     expect(s.is({
       address: {
@@ -10,9 +10,11 @@ describe('Transport object structure', () => {
         city: 'Ennery',
         zip_code: '57365',
         country: 'FR',
-        province: 'Moselle',
-        position: '49.221935,6.217841',
-        timezone: 'Europe/Paris'
+        timezone: 'Europe/Paris',
+        position: {
+          lat: '49.221935',
+          lon: '6.217841'
+        }
       },
       real_departure: '2020-09-25T08:00:00Z',
       contact: {
@@ -28,7 +30,7 @@ describe('Transport object structure', () => {
       real_arrival: '2020-09-25T08:00:00Z',
       packages_to_unload: ['42b05af4-b74c-4307-b3f7-b795d2df6ec2', 'f462f860-4230-43c9-8fe7-2fcbfd03b080'],
       arrival_until: '2020-09-25T08:00:00Z'
-    }, struct.point)).toBeTruthy()
+    }, struct.point)).toBeTruthy();
 
     expect(s.is({
       address: null,

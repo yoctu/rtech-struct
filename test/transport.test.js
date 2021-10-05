@@ -1,5 +1,5 @@
-const s = require('superstruct')
-const struct = require('../structures/transport')
+const s = require('superstruct');
+const struct = require('../structures/transport');
 
 const transport = {
   id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
@@ -13,8 +13,8 @@ const transport = {
       }],
     vehicle: {
       last_position: {
-        latitude: '49.221935',
-        longitude: '6.217841'
+        lat: '49.221935',
+        lon: '6.217841'
       },
       tracking_provider: 'tracking',
       plate: 'AB 123 CD',
@@ -25,7 +25,7 @@ const transport = {
   },
   distances: [1.5, 2, 3.4],
   waybill: 'https://traking.com/waybill',
-  incoterm: 'bloop',
+  incoterm: 'ABC',
   source: 'Evian',
   packages: [{
     owner: 'owner',
@@ -59,8 +59,10 @@ const transport = {
       city: 'Ennery',
       zip_code: '57365',
       country: 'FR',
-      province: 'Moselle',
-      position: '49.221935,6.217841',
+      position: {
+        lat: '49.221935',
+        lon: '6.217841'
+      },
       timezone: 'Europe/Paris'
     },
     real_departure: '2020-09-25T08:00:00Z',
@@ -83,85 +85,51 @@ const transport = {
 describe('Transport object structure', () => {
   test('Success: Transport structure', () => {
     expect(s.is(transport, struct.transport)).toBeTruthy()
-  })
+  });
 
   test('Fail: Transport structure mandatory fields are present', () => {
-    const [error, entity] = s.validate({}, struct.transport)
+    const [error, entity] = s.validate({}, struct.transport);
 
     for (const failure of error.failures()) {
-      expect(['id', 'key', 'carrier', 'status', 'packages', 'points', 'source']).toEqual(expect.arrayContaining(failure.path))
+      expect(['id', 'key', 'carrier', 'status', 'packages', 'points', 'source']).toEqual(expect.arrayContaining(failure.path));
     }
-  })
+  });
 
   test('Fail: key cannot be empty', () => {
-    const t = JSON.parse(JSON.stringify(transport))
+    const t = JSON.parse(JSON.stringify(transport));
 
     expect(s.is(
       Object.assign(t, {
         key: ''
-      }), struct.transport)).toBeFalsy()
+      }), struct.transport)).toBeFalsy();
 
     expect(s.is(
       Object.assign(t, {
         key: null
-      }), struct.transport)).toBeFalsy()
+      }), struct.transport)).toBeFalsy();
 
-    delete t.key
+    delete t.key;
 
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
-
-  test('Fail: shippers cannot be empty', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        shippers: ''
-      }),
-      struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        shippers: []
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        shippers: ['']
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        shippers: [null]
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        shippers: null
-      }), struct.transport)).toBeFalsy()
-
-    delete t.shippers
-
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
+    expect(s.is(t, struct.transport)).toBeFalsy();
+  });
 
   test('Fail: creator cannot be empty', () => {
-    const t = JSON.parse(JSON.stringify(transport))
+    const t = JSON.parse(JSON.stringify(transport));
 
     expect(s.is(
       Object.assign(t, {
         creator: ''
-      }), struct.transport)).toBeFalsy()
+      }), struct.transport)).toBeFalsy();
 
     expect(s.is(
       Object.assign(t, {
         creator: null
-      }), struct.transport)).toBeFalsy()
+      }), struct.transport)).toBeFalsy();
 
-    delete t.creator
+    delete t.creator;
 
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
+    expect(s.is(t, struct.transport)).toBeFalsy();
+  });
 
   test('Fail: vehicle is mandatory', () => {
     const t = JSON.parse(JSON.stringify(transport))
@@ -176,161 +144,40 @@ describe('Transport object structure', () => {
         vehicle: null
       }), struct.transport)).toBeFalsy()
 
-    delete t.vehicle
+    delete t.vehicle;
 
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
-
-  test('Fail: vehicle_type is mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_type: ''
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_type: null
-      }), struct.transport)).toBeFalsy()
-
-    delete t.vehicle_type
-
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
-
-  test('Fail: vehicle_owner is not mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_owner: ''
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_owner: null
-      }
-      ), struct.transport)).toBeFalsy()
-
-    delete t.vehicle_owner
-
-    expect(s.is(t, struct.transport)).toBeTruthy()
-  })
-
-  test('Fail: vehicle_owner_name is not mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_owner_name: ''
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_owner_name: null
-      }
-      ), struct.transport)).toBeFalsy()
-
-    delete t.vehicle_owner_name
-
-    expect(s.is(t, struct.transport)).toBeTruthy()
-  })
-
-  test('Fail: vehicle_tracking_provider is not mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_tracking_provider: ''
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle_tracking_provider: null
-      }), struct.transport)).toBeFalsy()
-
-    delete t.vehicle_tracking_provider
-
-    expect(s.is(t, struct.transport)).toBeTruthy()
-  })
-
-  test('Fail: packages_loaded is mandatory and not empty', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        packages_loaded: []
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        packages_loaded: null
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        packages_loaded: [{}, {}]
-      }), struct.transport)).toBeFalsy()
-
-    delete t.packages_loaded
-
-    expect(s.is(t, struct.transport)).toBeFalsy()
-  })
-
-  test('Success: shippers_name is not mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    delete t.shippers_name
-
-    expect(s.is(t, struct.transport)).toBeTruthy()
-  })
+    expect(s.is(t, struct.transport)).toBeFalsy();
+  });
 
   test('Success: Transport structure id is defaulted to UUID', () => {
-    let t = JSON.parse(JSON.stringify(transport))
+    let t = JSON.parse(JSON.stringify(transport));
 
-    let entity = s.create(t, struct.transport)
+    let entity = s.create(t, struct.transport);
 
-    expect(entity).toHaveProperty('id', 'thisisanid')
+    expect(entity).toHaveProperty('id', 'thisisanid');
 
-    delete t.id
+    delete t.id;
 
-    entity = s.create(t, struct.transport)
+    entity = s.create(t, struct.transport);
 
-    expect(entity).toHaveProperty('id')
+    expect(entity).toHaveProperty('id');
 
-    expect(s.is(entity, struct.transport)).toBeTruthy()
-  })
+    expect(s.is(entity, struct.transport)).toBeTruthy();
+  });
 
   test('Success: Transport structure status is defaulted to `planned`', () => {
-    let t = JSON.parse(JSON.stringify(transport))
+    let t = JSON.parse(JSON.stringify(transport));
 
-    let entity = s.create(t, struct.transport)
+    let entity = s.create(t, struct.transport);
 
-    expect(entity).toHaveProperty('status', 'running')
+    expect(entity).toHaveProperty('status', 'running');
 
-    delete t.status
+    delete t.status;
 
-    entity = s.create(t, struct.transport)
+    entity = s.create(t, struct.transport);
 
-    expect(entity).toHaveProperty('status', 'planned')
+    expect(entity).toHaveProperty('status', 'planned');
 
-    expect(s.is(entity, struct.transport)).toBeTruthy()
-  })
-
-  test('Success: Transport structure shippers_name is defaulted to shippers', () => {
-    let t = JSON.parse(JSON.stringify(transport))
-
-    let entity = s.create(t, struct.transport)
-
-    expect(entity).toHaveProperty('shippers_name', t.shippers_name)
-
-    delete t.shippers_name
-
-    entity = s.create(t, struct.transport)
-
-    expect(entity).toHaveProperty('shippers_name', t.shippers_name)
-
-    expect(s.is(entity, struct.transport)).toBeTruthy()
-  })
+    expect(s.is(entity, struct.transport)).toBeTruthy();
+  });
 })

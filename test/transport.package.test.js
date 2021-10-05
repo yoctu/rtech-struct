@@ -1,5 +1,5 @@
-const s = require('superstruct')
-const struct = require('../structures/transport')
+const s = require('superstruct');
+const struct = require('../structures/transport');
 
 describe('Transport object structure', () => {
   test('Success: Package structure', () => {
@@ -25,19 +25,14 @@ describe('Transport object structure', () => {
       },
       tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
       status: 'waiting_for_pickup'
-    }, struct.package)).toBeTruthy()
+    }, struct.package)).toBeTruthy();
   });
 
   test('Fail: Package structure mandatory fields are present', () => {
-    const [error, entity] = s.validate({}, struct.package)
+    const [error, entity] = s.validate({}, struct.package);
 
     for (const failure of error.failures()) {
-      expect(["height",
-        "length",
-        "owner",
-        "tracking_id",
-        "weight",
-        "width"]).toEqual(expect.arrayContaining(failure.path));
+      expect(['height', 'length', 'owner', 'tracking_id', 'weight', 'width', 'status', 'stackable', 'quantity']).toEqual(expect.arrayContaining(failure.path));
     }
   });
 
@@ -49,14 +44,14 @@ describe('Transport object structure', () => {
       height: '',
       weight: '',
       quantity: '',
-      stackable: true,
-      track_id: 'test_track_id'
-    }, struct.package)
+      stackable: '',
+      tracking_id: 'test_track_id'
+    }, struct.package);
 
     for (const failure of error.failures()) {
-      expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'track_id', 'stackable']).toEqual(expect.arrayContaining(failure.path))
+      expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'tracking_id', 'stackable']).toEqual(expect.arrayContaining(failure.path));
     }
-  })
+  });
 
   test('Fail: Package structure mandatory fields are null', () => {
     const [error, entity] = s.validate({
@@ -67,40 +62,40 @@ describe('Transport object structure', () => {
       weight: null,
       quantity: null,
       stackable: true,
-      track_id: 'test_track_id'
-    }, struct.package)
+      tracking_id: 'test_track_id'
+    }, struct.package);
 
     for (const failure of error.failures()) {
-      expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'track_id', 'stackable']).toEqual(expect.arrayContaining(failure.path))
+      expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'tracking_id', 'stackable']).toEqual(expect.arrayContaining(failure.path));
     }
-  })
+  });
 
-  test('Success: Package structure number fields are number string', () => {
+  test('Success: Package structure number fields are number/float', () => {
     expect(s.is({
       owner: 'DEMO',
-      width: '70.0',
-      length: '84.12',
-      height: '94.33',
-      weight: '9.4',
-      quantity: '1',
-      stackable: true,
-      reference: 'REFERENCE',
-      track_id: 'test_track_id',
+      width: 70.0,
+      length: 84.12,
+      height: 94.33,
+      weight: 9.4,
+      quantity: 1,
+      stackable: '1',
+      references: ['ref1', 'ref2'],
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       status: 'waiting_for_pickup'
-    }, struct.package)).toBeTruthy()
-  })
+    }, struct.package)).toBeTruthy();
+  });
 
-  test('Fail: Package structure quantity is integer', () => {
+  test('Fail: Package structure quantity should be integer', () => {
     expect(s.is({
       owner: 'DEMO',
-      width: '70.0',
-      length: '84.12',
-      height: '94.33',
-      weight: '9.4',
+      width: 70.0,
+      length: 84.12,
+      height: 94.33,
+      weight: 9.4,
       quantity: '1.1',
       stackable: true,
-      track_id: 'test_track_id'
-    }, struct.package)).toBeFalsy()
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
+    }, struct.package)).toBeFalsy();
 
     expect(s.is({
       owner: 'DEMO',
@@ -110,25 +105,25 @@ describe('Transport object structure', () => {
       weight: '9.4',
       quantity: 1.1,
       stackable: true,
-      track_id: 'test_track_id'
-    }, struct.package)).toBeFalsy()
-  })
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
+    }, struct.package)).toBeFalsy();
+  });
 
   test('Success: Package reference is optional', () => {
     expect(s.is({
       owner: 'DEMO',
-      width: 70,
-      length: 84,
-      height: 94,
-      weight: 9,
+      width: 70.0,
+      length: 84.12,
+      height: 94.33,
+      weight: 9.4,
       quantity: 1,
-      stackable: true,
-      track_id: 'test_track_id',
+      stackable: '1',
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       status: 'waiting_for_pickup'
-    }, struct.package)).toBeTruthy()
-  })
+    }, struct.package)).toBeTruthy();
+  });
 
-  test('Success: Package structure stackable is defaulted boolean', () => {
+  test('Success: Package structure stackable is defaulted "no"', () => {
     let entity = s.create({
       owner: 'DEMO',
       width: 70.0,
@@ -136,12 +131,12 @@ describe('Transport object structure', () => {
       height: 94.33,
       weight: 9,
       quantity: 1,
-      stackable: true,
-      track_id: 'test_track_id',
+      stackable: 'no',
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       status: 'waiting_for_pickup'
-    }, struct.package)
+    }, struct.package);
 
-    expect(entity).toHaveProperty('stackable', true)
+    expect(entity).toHaveProperty('stackable', 'no');
 
     entity = s.create({
       owner: 'DEMO',
@@ -150,14 +145,15 @@ describe('Transport object structure', () => {
       height: 94.33,
       weight: 9,
       quantity: 1,
-      track_id: 'test_track_id',
+      stackable: '1',
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       status: 'waiting_for_pickup'
-    }, struct.package)
+    }, struct.package);
 
-    expect(entity).toHaveProperty('stackable', false)
+    expect(entity).toHaveProperty('stackable', '1');
 
-    expect(s.is(entity, struct.package)).toBeTruthy()
-  })
+    expect(s.is(entity, struct.package)).toBeTruthy();
+  });
 
   test('Success: Package structure quantity is defaulted to 1', () => {
     let entity = s.create({
@@ -166,31 +162,18 @@ describe('Transport object structure', () => {
       length: 84.12,
       height: 94.33,
       weight: 9,
-      quantity: 11,
-      stackable: true,
-      track_id: 'test_track_id',
+      quantity: 1,
+      stackable: 'no',
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       status: 'waiting_for_pickup'
-    }, struct.package)
+    }, struct.package);
 
-    expect(entity).toHaveProperty('quantity', 11)
+    expect(entity).toHaveProperty('quantity', 1);
 
-    entity = s.create({
-      owner: 'DEMO',
-      width: 70.0,
-      length: 84.12,
-      height: 94.33,
-      weight: 9,
-      stackable: true,
-      track_id: 'test_track_id',
-      status: 'waiting_for_pickup'
-    }, struct.package)
+    expect(s.is(entity, struct.package)).toBeTruthy();
+  });
 
-    expect(entity).toHaveProperty('quantity', 1)
-
-    expect(s.is(entity, struct.package)).toBeTruthy()
-  })
-
-  test('Success: Package structure track_id is defaulted to UUID', () => {
+  test('Success: Package structure tracking_id is defaulted to UUID', () => {
     let entity = s.create({
       owner: 'DEMO',
       width: 70.0,
@@ -198,25 +181,13 @@ describe('Transport object structure', () => {
       height: 94.33,
       weight: 9,
       quantity: 1,
-      track_id: 'test_track_id',
-      stackable: true,
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
+      stackable: 'no',
       status: 'waiting_for_pickup'
-    }, struct.package)
+    }, struct.package);
 
-    expect(entity).toHaveProperty('track_id', 'test_track_id')
-
-    entity = s.create({
-      owner: 'DEMO',
-      width: 70.0,
-      length: 84.12,
-      height: 94.33,
-      weight: 9,
-      stackable: true,
-      status: 'waiting_for_pickup'
-    }, struct.package)
-
-    expect(entity).toHaveProperty('track_id')
+    expect(entity).toHaveProperty('tracking_id', 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c');
 
     expect(s.is(entity, struct.package)).toBeTruthy()
-  })
-})
+  });
+});
