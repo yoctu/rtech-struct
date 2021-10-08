@@ -2,9 +2,9 @@ const s = require('superstruct');
 const uuidv4 = require('uuid').v4();
 
 const ADR = s.object({
-  un_code: s.optional(s.string()),
-  class: s.optional(s.string()),
-  packing_group: s.optional(s.string())
+  un_code: s.string(),
+  class: s.string(),
+  packing_group: s.string()
 });
 
 const GoodValue = s.object({
