@@ -11,6 +11,7 @@ const ZuluDate = require('../../lib').zouloudate(s)
 const Point = s.object({
   key: s.size(s.string(), 8, 128),
   address: address,
+  types: s.optional(s.array(s.size(s.string(), 2, 32))),
   arrival_from: s.coerce(ZuluDate, s.string(), toZuluDate),
   arrival_until: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
   real_arrival: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),

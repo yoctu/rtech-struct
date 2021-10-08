@@ -18,7 +18,7 @@ const Package = s.object({
   status: s.optional(s.defaulted(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered']), 'waiting_for_pickup')),
   stackable: s.defaulted(s.enums(['no', '1', '2', '3', '4']), 'no'),
   quantity: s.defaulted(s.integer(), 1),
-  references: s.optional(s.array(s.size(s.string(), 1, 128))),
+  references: s.optional(s.size(s.array(s.size(s.string(), 0, 128)), 1, 5)),
   length: s.min(s.number(), 0),
   width: s.min(s.number(), 0),
   height: s.min(s.number(), 0),
@@ -30,5 +30,5 @@ const Package = s.object({
 });
 
 module.exports = {
-  package: Package
+  tranportPackage: Package
 }
