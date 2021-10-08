@@ -1,5 +1,5 @@
 const s = require('superstruct');
-const struct = require('../../../structures/transport/v2/input/transport');
+const struct = require('../../../structures/transport/v2/package');
 
 describe('Transport object structure', () => {
   test('Success: Package structure', () => {
@@ -24,7 +24,6 @@ describe('Transport object structure', () => {
         value: 42.42
       },
       tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
-      status: 'waiting_for_pickup'
     }, struct.package)).toBeTruthy();
   });
 
@@ -80,8 +79,7 @@ describe('Transport object structure', () => {
       quantity: 1,
       stackable: '1',
       references: ['ref1', 'ref2'],
-      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-      status: 'waiting_for_pickup'
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
     }, struct.package)).toBeTruthy();
   });
 
@@ -119,7 +117,6 @@ describe('Transport object structure', () => {
       quantity: 1,
       stackable: '1',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-      status: 'waiting_for_pickup'
     }, struct.package)).toBeTruthy();
   });
 
@@ -131,9 +128,7 @@ describe('Transport object structure', () => {
       height: 94.33,
       weight: 9,
       quantity: 1,
-      stackable: 'no',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-      status: 'waiting_for_pickup'
     }, struct.package);
 
     expect(entity).toHaveProperty('stackable', 'no');
@@ -147,7 +142,6 @@ describe('Transport object structure', () => {
       quantity: 1,
       stackable: '1',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-      status: 'waiting_for_pickup'
     }, struct.package);
 
     expect(entity).toHaveProperty('stackable', '1');
@@ -162,10 +156,8 @@ describe('Transport object structure', () => {
       length: 84.12,
       height: 94.33,
       weight: 9,
-      quantity: 1,
       stackable: 'no',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-      status: 'waiting_for_pickup'
     }, struct.package);
 
     expect(entity).toHaveProperty('quantity', 1);
@@ -183,7 +175,6 @@ describe('Transport object structure', () => {
       quantity: 1,
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       stackable: 'no',
-      status: 'waiting_for_pickup'
     }, struct.package);
 
     expect(entity).toHaveProperty('tracking_id', 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c');

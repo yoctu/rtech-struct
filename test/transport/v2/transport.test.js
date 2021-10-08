@@ -1,28 +1,28 @@
 const s = require('superstruct');
-const struct = require('../../../structures/transport/v2/input/transport');
+const struct = require('../../../structures/transport/v2/transport');
 
 const transport = {
   id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
   key: 'abeautifullkey',
-  carrier: {
-    id: 'anID',
-    drivers:
-      [{
-        phone: '+352 42 42 42',
-        name: 'Driver name'
-      }],
-    vehicle: {
-      last_position: {
-        lat: '49.221935',
-        lon: '6.217841'
-      },
+  vehicles: [
+    {
       tracking_provider: 'tracking',
       plate: 'AB 123 CD',
       information: 'blabla',
       type: 'transport',
-      brand: 'Volvo'
+      brand: 'Volvo',
+      carrier: {
+        code: 'CARRIER'
+      },
+      drivers:[
+        {
+          phone: '+352 42 42 42',
+          name: 'Driver name'
+        }
+      ],
+      packages: ['17504abf-40ea-4b20-86dd-eb6ff00af325']
     }
-  },
+  ],
   distances: [1.5, 2, 3.4],
   waybill: 'https://traking.com/waybill',
   incoterm: 'ABC',
@@ -51,35 +51,60 @@ const transport = {
     status: 'waiting_for_pickup'
   }],
   tracking_url: 'https://traking.com/track',
-  status: 'running',
-  points: [{
-    address: {
-      street: '34 Rue Jacques Marjorelle',
-      additional_street: 'en face du 35',
-      city: 'Ennery',
-      zip_code: '57365',
-      country: 'FR',
-      position: {
-        lat: '49.221935',
-        lon: '6.217841'
+  points: [
+    {
+      key: 'this is a good key',
+      address: {
+        street: '34 Rue Jacques Marjorelle',
+        additional_street: 'en face du 35',
+        city: 'Ennery',
+        zip_code: '57365',
+        country: 'FR',
+        position: {
+          lat: 49.221935,
+          lon: 6.217841
+        },
+        timezone_string: 'Europe/Paris'
       },
-      timezone: 'Europe/Paris'
+      contact: {
+        phone: '+352 42 42 42',
+        company_name: 'Pizza Express',
+        name: 'Woody',
+        email: 'morty@schmidt.com'
+      },
+      packages_to_load: ['17504abf-40ea-4b20-86dd-eb6ff00af325'],
+      arrival_from: '2020-09-25T08:00:00Z',
+      comment: 'commentary',
+      packages_to_unload: [],
+      arrival_until: '2020-09-25T08:00:00Z'
     },
-    real_departure: '2020-09-25T08:00:00Z',
-    contact: {
-      phone: '+352 42 42 42',
-      company_name: 'Pizza Express',
-      name: 'Woody',
-      email: 'morty@schmidt.com'
-    },
-    packages_to_load: ['42b05af4-b74c-4307-b3f7-b795d2df6ec2', 'f462f860-4230-43c9-8fe7-2fcbfd03b080'],
-    arrival_from: '2020-09-25T08:00:00Z',
-    comment: 'commentary',
-    id: 'd996f34e-d849-41a9-a691-bd9834f63eed',
-    real_arrival: '2020-09-25T08:00:00Z',
-    packages_to_unload: ['42b05af4-b74c-4307-b3f7-b795d2df6ec2', 'f462f860-4230-43c9-8fe7-2fcbfd03b080'],
-    arrival_until: '2020-09-25T08:00:00Z'
-  }]
+    {
+      key: 'this is a good key2',
+      address: {
+        street: '33, another street',
+        city: 'Paris',
+        zip_code: '75000',
+        country: 'FR',
+        position: {
+          lat: 49.221935,
+          lon: 6.217841
+        },
+        timezone_string: 'Europe/Paris'
+      },
+      contact: {
+        phone: '+352 42 42 42',
+        company_name: 'Pizza Express',
+        name: 'Woody',
+        email: 'morty@schmidt.com'
+      },
+      packages_to_load: [],
+      arrival_from: '2020-09-26T08:00:00Z',
+      comment: 'commentary',
+      packages_to_unload: ['17504abf-40ea-4b20-86dd-eb6ff00af325'],
+      arrival_until: '2020-09-26T08:00:00Z'
+    }
+  ],
+  creator: 'DEMO'
 };
 
 describe('Transport object structure', () => {
@@ -91,7 +116,7 @@ describe('Transport object structure', () => {
     const [error, entity] = s.validate({}, struct.transport);
 
     for (const failure of error.failures()) {
-      expect(['id', 'key', 'carrier', 'status', 'packages', 'points', 'source']).toEqual(expect.arrayContaining(failure.path));
+      expect(['id', 'key', 'packages', 'points', 'source', 'creator']).toEqual(expect.arrayContaining(failure.path));
     }
   });
 
@@ -131,30 +156,11 @@ describe('Transport object structure', () => {
     expect(s.is(t, struct.transport)).toBeFalsy();
   });
 
-  test('Fail: vehicle is mandatory', () => {
-    const t = JSON.parse(JSON.stringify(transport))
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle: ''
-      }), struct.transport)).toBeFalsy()
-
-    expect(s.is(
-      Object.assign(t, {
-        vehicle: null
-      }), struct.transport)).toBeFalsy()
-
-    delete t.vehicle;
-
-    expect(s.is(t, struct.transport)).toBeFalsy();
-  });
-
   test('Success: Transport structure id is defaulted to UUID', () => {
     let t = JSON.parse(JSON.stringify(transport));
+    t.id = 'thisisanid';
 
-    let entity = s.create(t, struct.transport);
-
-    expect(entity).toHaveProperty('id', 'thisisanid');
+    expect(s.is(t, struct.transport)).toBeFalsy();
 
     delete t.id;
 
@@ -167,6 +173,7 @@ describe('Transport object structure', () => {
 
   test('Success: Transport structure status is defaulted to `planned`', () => {
     let t = JSON.parse(JSON.stringify(transport));
+    t.status = 'running';
 
     let entity = s.create(t, struct.transport);
 
