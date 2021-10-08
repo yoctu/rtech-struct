@@ -24,11 +24,11 @@ describe('Transport object structure', () => {
         value: 42.42
       },
       tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
-    }, struct.package)).toBeTruthy();
+    }, struct.tranportPackage)).toBeTruthy();
   });
 
   test('Fail: Package structure mandatory fields are present', () => {
-    const [error, entity] = s.validate({}, struct.package);
+    const [error, entity] = s.validate({}, struct.tranportPackage);
 
     for (const failure of error.failures()) {
       expect(['height', 'length', 'owner', 'tracking_id', 'weight', 'width', 'status', 'stackable', 'quantity']).toEqual(expect.arrayContaining(failure.path));
@@ -45,7 +45,7 @@ describe('Transport object structure', () => {
       quantity: '',
       stackable: '',
       tracking_id: 'test_track_id'
-    }, struct.package);
+    }, struct.tranportPackage);
 
     for (const failure of error.failures()) {
       expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'tracking_id', 'stackable']).toEqual(expect.arrayContaining(failure.path));
@@ -62,7 +62,7 @@ describe('Transport object structure', () => {
       quantity: null,
       stackable: true,
       tracking_id: 'test_track_id'
-    }, struct.package);
+    }, struct.tranportPackage);
 
     for (const failure of error.failures()) {
       expect(['owner', 'width', 'length', 'height', 'weight', 'quantity', 'status', 'tracking_id', 'stackable']).toEqual(expect.arrayContaining(failure.path));
@@ -80,8 +80,22 @@ describe('Transport object structure', () => {
       stackable: '1',
       references: ['ref1', 'ref2'],
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
-    }, struct.package)).toBeTruthy();
+    }, struct.tranportPackage)).toBeTruthy();
   });
+
+  test('Fail: References can be empty string', () => {
+    expect(s.is({
+      owner: 'DEMO',
+      width: 70.0,
+      length: 84.12,
+      height: 94.33,
+      weight: 9.4,
+      quantity: 1,
+      stackable: '1',
+      references: ['', ''],
+      tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
+    }, struct.tranportPackage)).toBeTruthy();
+  })
 
   test('Fail: Package structure quantity should be integer', () => {
     expect(s.is({
@@ -93,7 +107,7 @@ describe('Transport object structure', () => {
       quantity: '1.1',
       stackable: true,
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
-    }, struct.package)).toBeFalsy();
+    }, struct.tranportPackage)).toBeFalsy();
 
     expect(s.is({
       owner: 'DEMO',
@@ -104,7 +118,7 @@ describe('Transport object structure', () => {
       quantity: 1.1,
       stackable: true,
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c'
-    }, struct.package)).toBeFalsy();
+    }, struct.tranportPackage)).toBeFalsy();
   });
 
   test('Success: Package reference is optional', () => {
@@ -117,7 +131,7 @@ describe('Transport object structure', () => {
       quantity: 1,
       stackable: '1',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-    }, struct.package)).toBeTruthy();
+    }, struct.tranportPackage)).toBeTruthy();
   });
 
   test('Success: Package structure stackable is defaulted "no"', () => {
@@ -129,7 +143,7 @@ describe('Transport object structure', () => {
       weight: 9,
       quantity: 1,
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-    }, struct.package);
+    }, struct.tranportPackage);
 
     expect(entity).toHaveProperty('stackable', 'no');
 
@@ -142,11 +156,11 @@ describe('Transport object structure', () => {
       quantity: 1,
       stackable: '1',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-    }, struct.package);
+    }, struct.tranportPackage);
 
     expect(entity).toHaveProperty('stackable', '1');
 
-    expect(s.is(entity, struct.package)).toBeTruthy();
+    expect(s.is(entity, struct.tranportPackage)).toBeTruthy();
   });
 
   test('Success: Package structure quantity is defaulted to 1', () => {
@@ -158,11 +172,11 @@ describe('Transport object structure', () => {
       weight: 9,
       stackable: 'no',
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
-    }, struct.package);
+    }, struct.tranportPackage);
 
     expect(entity).toHaveProperty('quantity', 1);
 
-    expect(s.is(entity, struct.package)).toBeTruthy();
+    expect(s.is(entity, struct.tranportPackage)).toBeTruthy();
   });
 
   test('Success: Package structure tracking_id is defaulted to UUID', () => {
@@ -175,10 +189,10 @@ describe('Transport object structure', () => {
       quantity: 1,
       tracking_id: 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c',
       stackable: 'no',
-    }, struct.package);
+    }, struct.tranportPackage);
 
     expect(entity).toHaveProperty('tracking_id', 'b85e2bf0-d457-4dbf-88b5-b0bc2e3ec24c');
 
-    expect(s.is(entity, struct.package)).toBeTruthy()
+    expect(s.is(entity, struct.tranportPackage)).toBeTruthy()
   });
 });
