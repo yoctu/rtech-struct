@@ -1,4 +1,4 @@
-const extract = require('../../../tools/auction/extractPackageAndStepInformation');
+const { tools: { auction: { extractPackageAndStepInformation: extract } } } = require('../../../index');
 
 test('Extract package v1 information', () => {
     const auction = {
