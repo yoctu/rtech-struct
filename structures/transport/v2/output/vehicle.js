@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const { vehicle } = require('../vehicle')
+const { vehicle } = require('../vehicle')
 const { position } = require('../address')
 
 const Vehicle = s.assign(

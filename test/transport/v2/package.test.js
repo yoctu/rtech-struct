@@ -1,7 +1,7 @@
 const s = require('superstruct');
 const struct = require('../../../structures/transport/v2/package');
 
-describe('Transport object structure', () => {
+describe('Package object structure', () => {
   test('Success: Package structure', () => {
     expect(s.is({
       owner: 'owner',
@@ -12,7 +12,7 @@ describe('Transport object structure', () => {
       length: 50,
       height: 50,
       weight: 3.3,
-      type: 'parcel',
+      package_type: 'parcel',
       adr: {
         un_code: 'un_code',
         class: '1',
@@ -195,4 +195,58 @@ describe('Transport object structure', () => {
 
     expect(s.is(entity, struct.tranportPackage)).toBeTruthy()
   });
+
+  test('Fail: wrong type', () => {
+    expect(s.is({
+      owner: 'owner',
+      stackable: 'no',
+      quantity: 1,
+      references: ['ref1', 'ref2'],
+      width: 50,
+      length: 50,
+      height: 50,
+      weight: 3.3,
+      package_type: 'parcel',
+      type: 'bas type',
+      adr: {
+        un_code: 'un_code',
+        class: '1',
+        packing_group: '2'
+      },
+      comment: 'commentary',
+      good_value: {
+        currency: 'USD',
+        value: 42.42
+      },
+      tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
+    }, struct.tranportPackage)).toBeFalsy();
+  });
+
+  test('Success: Package structure type is defaulted to package', () => {
+    const [error, entity] = s.validate({
+      owner: 'owner',
+      stackable: 'no',
+      quantity: 1,
+      references: ['ref1', 'ref2'],
+      width: 50,
+      length: 50,
+      height: 50,
+      weight: 3.3,
+      package_type: 'parcel',
+      adr: {
+        un_code: 'un_code',
+        class: '1',
+        packing_group: '2'
+      },
+      comment: 'commentary',
+      good_value: {
+        currency: 'USD',
+        value: 42.42
+      },
+      tracking_id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
+    }, struct.tranportPackage, { coerce: true });
+
+    expect(error).toBeUndefined();
+    expect(entity.type).toBe('package');
+  })
 });

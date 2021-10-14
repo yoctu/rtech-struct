@@ -9,7 +9,7 @@ const transport = {
       tracking_provider: 'tracking',
       plate: 'AB 123 CD',
       information: 'blabla',
-      type: 'transport',
+      vehicle_type: 'transport',
       brand: 'Volvo',
       carrier: {
         code: 'CARRIER'
@@ -36,7 +36,7 @@ const transport = {
     length: 50,
     height: 50,
     weight: 3.3,
-    type: 'parcel',
+    package_type: 'parcel',
     adr: {
       un_code: 'un_code',
       class: '1',
@@ -186,5 +186,19 @@ describe('Transport object structure', () => {
     expect(entity).toHaveProperty('status', 'planned');
 
     expect(s.is(entity, struct.transport)).toBeTruthy();
+  });
+
+  test('Fail: wrong type', () => {
+    const [error1] = s.validate({ ...transport, type: 'wrong type' }, struct.transport)
+
+    expect(error1).toBeInstanceOf(s.StructError)
+    expect(error1.path[0]).toBe('type')
+  });
+
+  test('Success: Point structure type is defaulted to point', () => {
+    const [error, entity] = s.validate(transport, struct.transport, { coerce: true })
+
+    expect(error).toBeUndefined()
+    expect(entity.type).toBe('transport')
   });
 })

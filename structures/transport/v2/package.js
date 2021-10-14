@@ -23,7 +23,8 @@ const Package = s.object({
   width: s.min(s.number(), 0),
   height: s.min(s.number(), 0),
   weight: s.min(s.number(), 0),
-  type: s.optional(s.defaulted(s.enums(['parcel', 'pallet']), 'parcel')),
+  package_type: s.optional(s.defaulted(s.enums(['parcel', 'pallet']), 'parcel')),
+  type: s.defaulted(s.optional(s.literal('package')), 'package'),
   adr: s.optional(ADR),
   comment: s.optional(s.size(s.string(), 1, 256)),
   good_value: s.optional(GoodValue)
