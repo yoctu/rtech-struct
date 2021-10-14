@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../structures/fleet')
+const struct = require('../../structures/fleet')
 
 describe('Fleet object structure', () => {
   test('Success: Fleet structure', () => {

@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../../../structures/transport/v2/point')
+const struct = require('../../../../structures/transport/v2/point')
 
 describe('Point object structure', () => {
   test('Success: Point structure', () => {

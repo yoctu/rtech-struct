@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../../../structures/transport/v2/carrier')
+const struct = require('../../../../structures/transport/v2/carrier')
 
 
 describe('Carrier object structure', () => {

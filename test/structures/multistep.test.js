@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const {multistep, packageV1, packageV2} = require('../structures/multistep')
+const {multistep, packageV1, packageV2} = require('../../structures/multistep')
 
 describe('Dimension structure', () => {
   test('Success: Multistep structure', () => {
