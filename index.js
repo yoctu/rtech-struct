@@ -7,6 +7,7 @@ const { point, package: packageFn, transport } = require('./structures/transport
 const { auction } = require('./structures/auction')
 const { bid } = require('./structures/bid')
 const { filter, filters } = require('./structures/filter')
+const extractPackageAndStepInformation = require('./tools/auction/extractPackageAndStepInformation');
 
 exports.address = () => address
 
@@ -35,3 +36,9 @@ exports.bid = config => bid(config)
 exports.filter = () => filter
 
 exports.filters = () => filters
+
+exports.tools = {
+    auction: {
+        extractPackageAndStepInformation,
+    },
+};
