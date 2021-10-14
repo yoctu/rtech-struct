@@ -1,6 +1,7 @@
 const s = require('superstruct')
 const { contact } = require('./contact')
 const { address } = require('./address')
+const { TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX } = require('./package')
 
 const toZuluDate = value => {
   return value.slice(-1) !== 'Z' ? value + 'Z' : value
@@ -8,21 +9,39 @@ const toZuluDate = value => {
 
 const ZuluDate = require('../lib').zouloudate(s)
 
+const KEY_SIZE_MIN = 8;
+const KEY_SIZE_MAX = 128;
+
+const POINT_TYPE_SIZE_MIN = 2;
+const POINT_TYPE_SIZE_MAX = 32;
+
+const COMMENT_SIZE_MIN = 1;
+const COMMENT_SIZE_MAX = 256;
+
 const Point = s.object({
-  key: s.size(s.string(), 8, 128),
+  key: s.size(s.string(), KEY_SIZE_MIN, KEY_SIZE_MAX),
   address: address,
-  point_types: s.optional(s.array(s.size(s.string(), 2, 32))),
+  point_types: s.optional(s.array(s.size(s.string(), POINT_TYPE_SIZE_MIN, POINT_TYPE_SIZE_MAX))),
   type: s.defaulted(s.optional(s.literal('point')), 'point'),
   arrival_from: s.coerce(ZuluDate, s.string(), toZuluDate),
   arrival_until: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
   real_arrival: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
   real_departure: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
   contact: s.optional(contact),
-  packages_to_load: s.array(s.size(s.string(), 8, 128)),
-  packages_to_unload: s.array(s.size(s.string(), 8, 128)),
-  comment: s.optional(s.size(s.string(), 1, 256))
+  packages_to_load: s.array(s.size(s.string(), TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX)),
+  packages_to_unload: s.array(s.size(s.string(), TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX)),
+  comment: s.optional(s.size(s.string(), COMMENT_SIZE_MIN, COMMENT_SIZE_MAX))
 })
 
 module.exports = {
-  point: Point
+  point: Point,
+
+  KEY_SIZE_MIN,
+  KEY_SIZE_MAX,
+
+  POINT_TYPE_SIZE_MIN,
+  POINT_TYPE_SIZE_MAX,
+
+  COMMENT_SIZE_MIN,
+  COMMENT_SIZE_MAX
 }
