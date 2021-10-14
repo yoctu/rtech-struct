@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../structures/transport')
+const struct = require('../../structures/transport')
 
 const transport = {
   id: 'thisisanid',

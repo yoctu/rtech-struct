@@ -1,5 +1,5 @@
 const s = require('superstruct');
-const struct = require('../../../structures/transport/v2/package');
+const struct = require('../../../../structures/transport/v2/package');
 
 describe('Package object structure', () => {
   test('Success: Package structure', () => {

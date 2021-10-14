@@ -36,11 +36,11 @@ const Auctions = [{
   visible: "public"
 }]
 
-const BidStruct = require('../structures/bid').bid()
-const BidStructAuction = require('../structures/bid').bid(null, Auctions[0])
-const BidStructConfigScoreStrings = require('../structures/bid').bid({...Config, ...{score: [ "1", "5", "2" ]}}, null)
-const BidStructConfigScoreNumbers = require('../structures/bid').bid({...Config, ...{score: [ 1, 15, 6 ]}}, null)
-const BidStructAuctionConfig = require('../structures/bid').bid(Config, Auctions[0])
+const BidStruct = require('../../structures/bid').bid()
+const BidStructAuction = require('../../structures/bid').bid(null, Auctions[0])
+const BidStructConfigScoreStrings = require('../../structures/bid').bid({...Config, ...{score: [ "1", "5", "2" ]}}, null)
+const BidStructConfigScoreNumbers = require('../../structures/bid').bid({...Config, ...{score: [ 1, 15, 6 ]}}, null)
+const BidStructAuctionConfig = require('../../structures/bid').bid(Config, Auctions[0])
 
 const Bids = [{
   key: 'jest-bid-test',

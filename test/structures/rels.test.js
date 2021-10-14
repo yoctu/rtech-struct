@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../structures/rels')
+const struct = require('../../structures/rels')
 
 describe('Rels object structure', () => {
   test('Success: Rels structure', () => {

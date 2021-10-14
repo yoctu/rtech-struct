@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../structures/contact')
+const struct = require('../../structures/contact')
 
 describe('Contact object structure', () => {
   test('Success: Contact structure', () => {

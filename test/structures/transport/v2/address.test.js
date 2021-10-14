@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../../../structures/transport/v2/address')
+const struct = require('../../../../structures/transport/v2/address')
 
 describe('Address object structure', () => {
   test('Success: Address structure', () => {

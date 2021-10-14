@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const AuctionStruct = require('../structures/auction').auction()
+const AuctionStruct = require('../../structures/auction').auction()
 
 const Auctions = [{
   id: require('uuid').v4(),

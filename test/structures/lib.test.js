@@ -1,6 +1,6 @@
-const Index = require('../index')
+const Index = require('../../index')
 const s = require('superstruct')
-const { Tz, consts } = require('../structures/lib')
+const { Tz, consts } = require('../../structures/lib')
 const ConstStruct = consts()
 
 describe('Lib Phone object structure', () => {

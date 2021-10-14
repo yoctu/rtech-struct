@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const struct = require('../structures/filter')
+const struct = require('../../structures/filter')
 const isUuid = require('is-uuid')
 
 describe('Filter object structure', () => {
