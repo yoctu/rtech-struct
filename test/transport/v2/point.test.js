@@ -216,7 +216,6 @@ describe('Point object structure', () => {
     }, struct.point)
 
     expect(error1).toBeInstanceOf(s.StructError)
-    expect(error1.type).toBe('string')
     expect(error1.path[0]).toBe('arrival_from')
   })
 
@@ -275,5 +274,66 @@ describe('Point object structure', () => {
       packages_to_load: [],
       packages_to_unload: []
     }, struct.point)).toBeTruthy()
-  })
+  });
+
+  test('Fail: wrong type', () => {
+    const [error1] = s.validate({
+      key: 'akeyqdqdqsdqsdsq',
+      arrival_from: '2020-11-11T17:07:44.014Z',
+      arrival_until: '2020-11-12T17:07:44.013Z',
+      address: {
+        street: '34 Rue Jacques Marjorelle',
+        city: 'Ennery',
+        zip_code: '57365',
+        country: 'FR',
+        position: {
+          lat: 49.221935,
+          lon: 6.217841
+        },
+        timezone_string: 'Europe/Paris'
+      },
+      contact: {
+        company_name: 'Redspher',
+        name: 'Vincent Simonin',
+        phone: '+33 6 61 10 32 29',
+        email: 'vincent.simonin@redspher.com'
+      },
+      packages_to_load: [],
+      packages_to_unload: [],
+      type: 'wrong type'
+    }, struct.point)
+
+    expect(error1).toBeInstanceOf(s.StructError)
+    expect(error1.path[0]).toBe('type')
+  });
+
+  test('Success: Point structure type is defaulted to point', () => {
+    const [error, entity] = s.validate({
+      key: 'akeyqdqdqsdqsdsq',
+      arrival_from: '2020-11-11T17:07:44.014Z',
+      arrival_until: '2020-11-12T17:07:44.013Z',
+      address: {
+        street: '34 Rue Jacques Marjorelle',
+        city: 'Ennery',
+        zip_code: '57365',
+        country: 'FR',
+        position: {
+          lat: 49.221935,
+          lon: 6.217841
+        },
+        timezone_string: 'Europe/Paris'
+      },
+      contact: {
+        company_name: 'Redspher',
+        name: 'Vincent Simonin',
+        phone: '+33 6 61 10 32 29',
+        email: 'vincent.simonin@redspher.com'
+      },
+      packages_to_load: [],
+      packages_to_unload: []
+    }, struct.point, { coerce: true })
+
+    expect(error).toBeUndefined()
+    expect(entity.type).toBe('point')
+  });
 })

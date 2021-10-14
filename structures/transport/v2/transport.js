@@ -10,6 +10,7 @@ const Uuid = s.define('Uuid', (value) => isUuid.v4(value))
 const Transport = s.object({
   id: s.defaulted(Uuid, uuidv4),
   key: s.size(s.string(), 8, 128),
+  type: s.defaulted(s.optional(s.literal('transport')), 'transport'),
   status: s.optional(s.defaulted(s.enums(['planned', 'cancelled', 'running', 'completed', 'expired']), 'planned')),
   source: s.size(s.string(), 2, 64),
   packages: s.array(tranportPackage),
