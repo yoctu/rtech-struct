@@ -1,5 +1,7 @@
 const s = require('superstruct')
-const struct = require('../../../../structures/transport/v2/vehicle')
+const { sfu } = require('../../../index')
+
+const struct = sfu().vehicle
 
 describe('Vehicle object structure', () => {
   test('Success: vehicle structure', () => {

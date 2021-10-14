@@ -1,5 +1,5 @@
 const s = require('superstruct');
-const { Tz } = require('../../lib');
+const { Tz } = require('../lib');
 
 const Position = s.object({
   lat: s.size(s.number(), -90, 90),

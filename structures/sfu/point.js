@@ -6,7 +6,7 @@ const toZuluDate = value => {
   return value.slice(-1) !== 'Z' ? value + 'Z' : value
 };
 
-const ZuluDate = require('../../lib').zouloudate(s)
+const ZuluDate = require('../lib').zouloudate(s)
 
 const Point = s.object({
   key: s.size(s.string(), 8, 128),

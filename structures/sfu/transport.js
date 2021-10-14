@@ -1,7 +1,7 @@
 const s = require('superstruct')
 const { vehicle } = require('./vehicle')
 const { point } = require('./point')
-const { tranportPackage } = require('./package')
+const { transportPackage } = require('./package')
 const uuidv4 = require('uuid').v4()
 const isUuid = require('is-uuid')
 
@@ -13,7 +13,7 @@ const Transport = s.object({
   type: s.defaulted(s.optional(s.literal('transport')), 'transport'),
   status: s.optional(s.defaulted(s.enums(['planned', 'cancelled', 'running', 'completed', 'expired']), 'planned')),
   source: s.size(s.string(), 2, 64),
-  packages: s.array(tranportPackage),
+  packages: s.array(transportPackage),
   points: s.size(s.array(point), 2, 50),
   vehicles: s.optional(s.array(vehicle)),
   distances: s.optional(s.array(s.number())),

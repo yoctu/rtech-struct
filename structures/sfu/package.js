@@ -31,5 +31,5 @@ const Package = s.object({
 });
 
 module.exports = {
-  tranportPackage: Package
+  transportPackage: Package
 }

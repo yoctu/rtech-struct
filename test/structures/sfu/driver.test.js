@@ -1,5 +1,7 @@
 const s = require('superstruct')
-const struct = require('../../../../structures/transport/v2/driver')
+const { sfu } = require('../../../index')
+
+const struct = sfu().driver
 
 describe('Driver object structure', () => {
   test('Success: Driver structure', () => {
