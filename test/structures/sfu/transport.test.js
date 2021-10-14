@@ -1,5 +1,7 @@
-const s = require('superstruct');
-const struct = require('../../../../structures/transport/v2/transport');
+const s = require('superstruct')
+const { sfu } = require('../../../index')
+
+const struct = sfu().transport
 
 const transport = {
   id: '17504abf-40ea-4b20-86dd-eb6ff00af325',
