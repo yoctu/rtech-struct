@@ -221,36 +221,6 @@ describe('Point object structure', () => {
     expect(error1.path[0]).toBe('arrival_from')
   })
 
-  test('Success: convert into zoulou date', () => {
-    const p = s.create({
-      key: 'akeyqdqdqsdqsdsq',
-      arrival_from: '2020-09-25T10:00:00',
-      arrival_until: '2020-09-25T10:00:00Z',
-      address: {
-        street: '34 Rue Jacques Marjorelle',
-        city: 'Ennery',
-        zip_code: '57365',
-        country: 'FR',
-        position: {
-          lat: 49.221935,
-          lon: 6.217841
-        },
-        timezone_string: 'Europe/Paris'
-      },
-      contact: {
-        company_name: 'Redspher',
-        name: 'Vincent Simonin',
-        phone: '+33 6 61 10 32 29',
-        email: 'vincent.simonin@redspher.com'
-      },
-      packages_to_load: [],
-      packages_to_unload: []
-    }, struct.point)
-
-    expect(p).toHaveProperty('arrival_from', '2020-09-25T10:00:00Z')
-    expect(p).toHaveProperty('arrival_until', '2020-09-25T10:00:00Z')
-  })
-
   test('Success: Date ISO with millisecond validation', () => {
     expect(s.is({
       key: 'akeyqdqdqsdqsdsq',
