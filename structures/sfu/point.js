@@ -3,11 +3,7 @@ const { contact } = require('./contact')
 const { address } = require('./address')
 const { TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX } = require('./package')
 
-const toZuluDate = value => {
-  return value.slice(-1) !== 'Z' ? value + 'Z' : value
-};
-
-const ZuluDate = require('../lib').zouloudate(s)
+const IsoDate = require('../lib').isodate(s)
 
 const KEY_SIZE_MIN = 8;
 const KEY_SIZE_MAX = 128;
@@ -23,10 +19,10 @@ const Point = s.object({
   address: address,
   point_types: s.optional(s.array(s.size(s.string(), POINT_TYPE_SIZE_MIN, POINT_TYPE_SIZE_MAX))),
   type: s.defaulted(s.optional(s.literal('point')), 'point'),
-  arrival_from: s.coerce(ZuluDate, s.string(), toZuluDate),
-  arrival_until: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
-  real_arrival: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
-  real_departure: s.optional(s.coerce(ZuluDate, s.string(), toZuluDate)),
+  arrival_from: IsoDate,
+  arrival_until: s.optional(IsoDate),
+  real_arrival: s.optional(IsoDate),
+  real_departure: s.optional(IsoDate),
   contact: s.optional(contact),
   packages_to_load: s.array(s.size(s.string(), TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX)),
   packages_to_unload: s.array(s.size(s.string(), TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX)),
