@@ -1,6 +1,6 @@
 {
   "name": "rtech-struct",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Rtech Platform Superstruct Entity",
   "main": "index.js",
   "scripts": {
@@ -14,19 +14,21 @@
     "url": "git+https://github.com/yoctu/rtech-struct.git"
   },
   "dependencies": {
-    "is-email": "^1.0.1",
+    "date-fns": "^2.25.0",
+    "date-fns-tz": "^1.1.6",
+    "is-email": "^1.0.2",
     "is-url": "*",
     "is-uuid": "*",
-    "superstruct": "*",
+    "superstruct": "^0.15.3",
     "uuid": "*"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jest": "^24.5.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^24.7.0",
     "eslint-plugin-node": "*",
     "eslint-plugin-standard": "*",
-    "jest": "^27.2.4"
+    "jest": "^27.3.1"
   },
   "engines": {
     "node": ">= 14.0.0",
