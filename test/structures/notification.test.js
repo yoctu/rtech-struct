@@ -5,17 +5,17 @@ describe('Notification object structure', () => {
   test('Success: Notification structure', () => {
     expect(s.is({
       content: {'test':'test'},
-      createdAt: new Date().toISOString(),
+      type: 'auction won',
       id: require('uuid').v4(),
-      type: 'auction won'
+      createdAt: new Date().toISOString()
     }, struct.notification)).toBeTruthy()
 
 
     const [err0, val0] = s.validate({
       content: {'test':'test'},
-      createdAt: new Date().toISOString(),
+      type: 'auction won',
       id: require('uuid').v4(),
-      type: 'auction won'
+      createdAt: new Date().toISOString()
     }, struct.notification, {
       coerce: true, mask: true
     })

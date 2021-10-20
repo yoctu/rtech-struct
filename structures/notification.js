@@ -6,9 +6,9 @@ const uuidStruct = s.define('uuid', isUuid.v4)
 const Notification = s.defaulted(
   s.type({
     content: s.object(),
-    createdAt: s.optional(s.string()),
+    type: s.string(),
     id: s.optional(uuidStruct),
-    type: s.string()
+    createdAt: s.optional(s.string())
   }), {
     id: () => uuid.v4(),
     createdAt: () => new Date().toISOString()
