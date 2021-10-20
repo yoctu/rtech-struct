@@ -249,6 +249,6 @@ describe('Package object structure', () => {
     }, struct.transportPackage, { coerce: true });
 
     expect(error).toBeUndefined();
-    expect(entity.type).toBe('package');
+    expect(entity.type).toBe('sfu/package');
   })
 });

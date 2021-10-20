@@ -14,11 +14,13 @@ const POINT_TYPE_SIZE_MAX = 32;
 const COMMENT_SIZE_MIN = 1;
 const COMMENT_SIZE_MAX = 256;
 
+const ENTITY_TYPE = 'sfu/point';
+
 const Point = s.object({
   key: s.size(s.string(), KEY_SIZE_MIN, KEY_SIZE_MAX),
   address: address,
   point_types: s.optional(s.array(s.size(s.string(), POINT_TYPE_SIZE_MIN, POINT_TYPE_SIZE_MAX))),
-  type: s.defaulted(s.optional(s.literal('point')), 'point'),
+  type: s.defaulted(s.optional(s.literal(ENTITY_TYPE)), ENTITY_TYPE),
   arrival_from: IsoDate,
   arrival_until: s.optional(IsoDate),
   real_arrival: s.optional(IsoDate),
@@ -39,5 +41,7 @@ module.exports = {
   POINT_TYPE_SIZE_MAX,
 
   COMMENT_SIZE_MIN,
-  COMMENT_SIZE_MAX
+  COMMENT_SIZE_MAX,
+
+  ENTITY_TYPE
 }

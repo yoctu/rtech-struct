@@ -306,6 +306,6 @@ describe('Point object structure', () => {
     }, struct.point, { coerce: true })
 
     expect(error).toBeUndefined()
-    expect(entity.type).toBe('point')
+    expect(entity.type).toBe('sfu/point')
   });
 })
