@@ -68,6 +68,6 @@ describe('Vehicle object structure', () => {
     }, struct.vehicle, { coerce: true })
 
     expect(error).toBeUndefined()
-    expect(entity.type).toBe('vehicle')
+    expect(entity.type).toBe('sfu/vehicle')
   });
 })

@@ -201,6 +201,6 @@ describe('Transport object structure', () => {
     const [error, entity] = s.validate(transport, struct.transport, { coerce: true })
 
     expect(error).toBeUndefined()
-    expect(entity.type).toBe('transport')
+    expect(entity.type).toBe('sfu/transport')
   });
 })

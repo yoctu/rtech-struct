@@ -190,5 +190,44 @@ describe('Address object structure', () => {
       },
       timezone_string: 'Europe/Paris'
     }, struct.address)).toBeTruthy()
-  })
+  });
+
+  test('Fail: wrong type', () => {
+    const [error1] = s.validate({
+      street: '34 Rue Jacques Marjorelle',
+      additional_street: 'en face du 35',
+      city: 'Ennery',
+      zip_code: '57365',
+      country: 'FR',
+      province: 'Moselle',
+      position: {
+        lat: 49.221935,
+        lon: 6.217841
+      },
+      timezone_string: 'Europe/Paris',
+      type: 'wrong type'
+    }, struct.address)
+
+    expect(error1).toBeInstanceOf(s.StructError)
+    expect(error1.path[0]).toBe('type')
+  });
+
+  test('Success: Address structure type is defaulted to point', () => {
+    const [error, entity] = s.validate({
+      street: '34 Rue Jacques Marjorelle',
+      additional_street: 'en face du 35',
+      city: 'Ennery',
+      zip_code: '57365',
+      country: 'FR',
+      province: 'Moselle',
+      position: {
+        lat: 49.221935,
+        lon: 6.217841
+      },
+      timezone_string: 'Europe/Paris',
+    }, struct.address, { coerce: true })
+
+    expect(error).toBeUndefined()
+    expect(entity.type).toBe('sfu/address')
+  });
 })

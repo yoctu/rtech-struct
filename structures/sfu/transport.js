@@ -24,10 +24,12 @@ const INCOTERM_SIZE = 3;
 const CREATOR_SIZE_MIN = 2;
 const CREATOR_SIZE_MAX = 32;
 
+const ENTITY_TYPE = 'sfu/transport';
+
 const Transport = s.object({
   id: s.defaulted(Uuid, uuidv4),
   key: s.size(s.string(), KEY_SIZE_MIN, KEY_SIZE_MAX),
-  type: s.defaulted(s.optional(s.literal('transport')), 'transport'),
+  type: s.defaulted(s.optional(s.literal(ENTITY_TYPE)), ENTITY_TYPE),
   status: s.optional(s.defaulted(s.enums(['planned', 'cancelled', 'running', 'completed', 'expired']), 'planned')),
   source: s.size(s.string(), SOURCE_SIZE_MIN, SOURCE_SIZE_MAX),
   packages: s.array(transportPackage),
@@ -58,5 +60,7 @@ module.exports = {
   INCOTERM_SIZE,
 
   CREATOR_SIZE_MIN,
-  CREATOR_SIZE_MAX
+  CREATOR_SIZE_MAX,
+
+  ENTITY_TYPE
 }

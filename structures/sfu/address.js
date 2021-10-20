@@ -23,6 +23,8 @@ const PROVINCE_SIZE_MAX = 128;
 
 const COUNTRY_SIZE = 2;
 
+const ENTITY_TYPE = 'sfu/address';
+
 const Address = s.object({
   street: s.size(s.string(), STREET_SIZE_MIN, STREET_SIZE_MAX),
   additional_street: s.optional(s.size(s.string(), ADDITIONAL_STREET_SIZE_MIN, ADDITIONAL_STREET_SIZE_MAX)),
@@ -31,7 +33,8 @@ const Address = s.object({
   province: s.optional(s.size(s.string(), PROVINCE_SIZE_MIN, PROVINCE_SIZE_MAX)),
   country: s.size(s.string(), COUNTRY_SIZE),
   timezone_string: Tz,
-  position: Position
+  position: Position,
+  type: s.defaulted(s.optional(s.literal(ENTITY_TYPE)), ENTITY_TYPE)
 });
 
 module.exports = {
@@ -53,5 +56,7 @@ module.exports = {
   PROVINCE_SIZE_MIN,
   PROVINCE_SIZE_MAX,
 
-  COUNTRY_SIZE
+  COUNTRY_SIZE,
+
+  ENTITY_TYPE
 }
