@@ -9,10 +9,10 @@ const Notification = s.defaulted(
     type: s.string(),
     id: s.optional(uuidStruct),
     createdAt: s.optional(s.string())
-  }), {
-    id: () => uuid.v4(),
-    createdAt: () => new Date().toISOString()
-})
+  }), () => ({
+    id: uuid.v4(),
+    createdAt: new Date().toISOString()
+}))
 
 module.exports = {
     notification: Notification,
