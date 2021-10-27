@@ -8,7 +8,7 @@ const { auction } = require('./structures/auction')
 const { bid } = require('./structures/bid')
 const { filter, filters } = require('./structures/filter')
 const sfu = require('./structures/sfu')
-const { notification } = require('./structures/notification')
+const notification = require('./structures/notification')
 const extractPackageAndStepInformation = require('./tools/auction/extractPackageAndStepInformation')
 
 exports.address = () => address

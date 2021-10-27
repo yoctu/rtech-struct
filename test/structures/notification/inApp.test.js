@@ -1,22 +1,24 @@
 const s = require('superstruct')
-const struct = require('../../structures/notification')
+const { notification } = require('../../../index')
+
+const inApp = notification().inApp
 
 describe('Notification object structure', () => {
   test('Success: Notification structure', () => {
     expect(s.is({
       content: {'test':'test'},
-      type: 'auction won',
+      notification_type: 'auction won',
       id: require('uuid').v4(),
       createdAt: new Date().toISOString()
-    }, struct.notification)).toBeTruthy()
+    }, inApp.structure)).toBeTruthy()
 
 
     const [err0, val0] = s.validate({
       content: {'test':'test'},
-      type: 'auction won',
+      notification_type: 'auction won',
       id: require('uuid').v4(),
       createdAt: new Date().toISOString()
-    }, struct.notification, {
+    }, inApp.structure, {
       coerce: true, mask: true
     })
 
@@ -25,20 +27,20 @@ describe('Notification object structure', () => {
   })
 
   test('Fail: Notification structure fail', () => {
-    let [error, value] = s.validate({
-      type: 'auction won'
-    }, struct.notification, {
+    let [error] = s.validate({
+      notification_type: 'auction won'
+    }, inApp.structure, {
       coerce: true, mask: true
     })
 
     expect(error).toHaveProperty('key', 'content')
 
-    let [error2, value2] = s.validate({
+    let [error2] = s.validate({
       content: {'test':'test'},
-    }, struct.notification, {
+    }, inApp.structure, {
       coerce: true, mask: true
     })
 
-    expect(error2).toHaveProperty('key', 'type')
+    expect(error2).toHaveProperty('key', 'notification_type')
   })
 })
