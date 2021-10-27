@@ -3,7 +3,7 @@ const uuid = require('uuid')
 const isUuid = require('is-uuid')
 const uuidStruct = s.define('uuid', isUuid.v4)
 
-const ENTITY_TYPE = 'sfu/carrier'
+const ENTITY_TYPE = 'notification/in-app'
 
 const structure = s.defaulted(
     s.type({
