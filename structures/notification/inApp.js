@@ -2,6 +2,7 @@ const s = require('superstruct')
 const uuid = require('uuid')
 const isUuid = require('is-uuid')
 const uuidStruct = s.define('uuid', isUuid.v4)
+const ZoulouDate = require('./lib').zouloudate(s)
 
 const ENTITY_TYPE = 'notification/in-app'
 
@@ -14,7 +15,7 @@ const structure = s.defaulted(
         createdAt: s.optional(s.string())
     }), () => ({
         id: uuid.v4(),
-        createdAt: new Date().toISOString(),
+        createdAt: ZoulouDate,
         type: ENTITY_TYPE,
     }))
 
