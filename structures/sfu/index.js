@@ -6,6 +6,7 @@ const pck = require('./package')
 const point = require('./point')
 const transport = require('./transport')
 const vehicle = require('./vehicle')
+const event = require('./event')
 
 module.exports = {
     address,
@@ -15,5 +16,6 @@ module.exports = {
     'package': pck,
     point,
     transport,
-    vehicle
+    vehicle,
+    event
 }
