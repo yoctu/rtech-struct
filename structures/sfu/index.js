@@ -7,6 +7,7 @@ const point = require('./point')
 const transport = require('./transport')
 const vehicle = require('./vehicle')
 const event = require('./event')
+const messageAt = require('./messageAt')
 
 module.exports = {
     address,
@@ -17,5 +18,6 @@ module.exports = {
     point,
     transport,
     vehicle,
-    event
+    event,
+    messageAt
 }
