@@ -75,7 +75,7 @@ exports.auction = function (config = null) {
       }),
       stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
       distance: s.optional(s.union([s.number(), s.string()])),
-      notes: s.optional(s.size(s.string(), 2, 256))
+      notes: s.optional(s.size(s.string(), 2, 512))
     }), {
     id: require('uuid').v4(),
     key: require('uuid').v4(),
