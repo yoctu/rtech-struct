@@ -2,6 +2,8 @@ const uuid = require('uuid')
 const { format } = require('date-fns-tz')
 const extractPackageAndStepInformation = require('./auction/extractPackageAndStepInformation')
 
+const isRubiwinPurchaseBid = (bid) => bid.creator === 'RUBIWIN' && bid.key.startsWith('PURCHASE_');
+
 const auctionToTransport = (auction) => {
   let distance = 0
 
@@ -137,7 +139,9 @@ const auctionToTransport = (auction) => {
 
   if (!!auction.bid) {
     transport.vehicles = [{
-      carrier: { code: auction.bid.from },
+      carrier: {
+        code: isRubiwinPurchaseBid(auction.bid) ? auction.bid.from: auction.bid.source[0]
+      },
       drivers: [],
       plate: auction.bid.driver,
       tracking_provider: auction.bid.tracker || 'ugo',
