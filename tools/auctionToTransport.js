@@ -131,7 +131,7 @@ const auctionToTransport = (auction) => {
         contact.phone = step.contact.phone
       }
 
-      if (Object.keys(contact).length > 0) {
+      if (Object.keys(contact).length > 0 && !!contact.company_name) {
         result.contact = contact
       }
     }
