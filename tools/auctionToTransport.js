@@ -115,6 +115,8 @@ const auctionToTransport = (auction) => {
 
       if (!!step.contact.companyName) {
         contact.company_name = step.contact.companyName
+      } else if (!!step.contact.name) {
+        contact.company_name = step.contact.name
       }
 
       if (!!step.contact.name) {

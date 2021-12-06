@@ -63,7 +63,7 @@ describe('Auction to transport', () => {
           ''
         ],
         puContact: [
-          'Company',
+          '',
           'Somebody',
           'example@example.net',
           '0000000000'
