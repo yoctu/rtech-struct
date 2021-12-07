@@ -30,10 +30,18 @@ describe('Lib Zoulou Date object structure', () => {
 })
 
 describe('Lib ISO8601 Date object structure', () => {
-  test('Success: Lib Zoulou Date structure', () => {
-    for (const i of ['2021-01-11T10:31:04.519Z', '2021-01-11T10:31:04Z', '2021-01-11T10:31:04+01:00', '2021-01-11T10:31:04-01:00']) {
-      expect(RegExp(ConstStruct.isoReg).test(i)).toBeTruthy()
-    }
+  test.each([
+    ['2021-01-11T10:31:04.519Z'],
+    ['2021-01-11T10:31:04Z'],
+    ['2021-01-11T10:31:04+01:00'],
+    ['2021-01-11T10:31:04-01:00'],
+    ['2021-01-11T10:31:04-01:00'],
+    ['2021-01-11T10:31:04-0100'],
+    ['2021-01-11T10:31:04+0830'],
+    ['2021-01-11T10:31:04.123+0830'],
+    ['2021-01-11T10:31:04.123-08:30']
+  ])('Success: Lib ISO8601 Date structure %s', (string) => {
+    expect(RegExp(ConstStruct.isoReg).test(string)).toBeTruthy()
   })
   test('Failed: Lib Zoulou Date structure', () => {
     for (const i of ['??!!', 'toto', '2021-01-11T10:31:04']) {
