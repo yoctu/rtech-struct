@@ -167,4 +167,15 @@ describe('Auction object structure', () => {
     expect(val2).toBeDefined()
     expect(val2).toHaveProperty('extras', ['2ND_DRIVER', 'OTHER_EXTRA'])
   })
+
+  let AuctionF9 = JSON.parse(JSON.stringify(Auctions[0]))
+  test('Success: Auction decision_until structure', () => {
+    const [err9, val9] = s.validate(AuctionF9, AuctionStruct, {
+      coerce: true, mask: true
+    })
+    expect(err9).toBeUndefined()
+    expect(val9).toBeDefined()
+    expect(val9).toHaveProperty('decision_until')
+    expect(val9.decision_until).toBeDefined()
+  })
 })

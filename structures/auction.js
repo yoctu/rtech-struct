@@ -29,6 +29,7 @@ exports.auction = function (config = null) {
       tracking_url: s.optional(Url),
       valid_until: ZoulouDate,
       valid_from: ZoulouDate,
+      decision_until: ZoulouDate,
       waybills: s.optional(s.size(s.string(), 8, 256)),
       creator: s.size(s.string(), 2, 32),
       visible: s.enums(['public', 'private']),
