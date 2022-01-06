@@ -177,5 +177,6 @@ describe('Auction object structure', () => {
     expect(val9).toBeDefined()
     expect(val9).toHaveProperty('decision_until')
     expect(val9.decision_until).toBeDefined()
+    expect(val9.decision_until).toEqual(val9.reported_at)
   })
 })
