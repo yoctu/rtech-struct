@@ -85,6 +85,7 @@ exports.auction = function (config = null) {
     reported_at: (new Date()).toISOString(),
     valid_until: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
     valid_from: (new Date()).toISOString(),
+    decision_until: (new Date()).toISOString(),
     type: 'auction',
     name: Instance + new Date().getTime(),
     status: 'created',
