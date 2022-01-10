@@ -100,6 +100,9 @@ exports.auction = function (config = null) {
   const struct = s.defaulted(type, values)
 
   return s.dynamic(value => {
+    if (value.decision_until) {
+      return struct
+    }
     if (value.reported_at) {
       return s.defaulted(struct, { decision_until: value.reported_at })
     }
