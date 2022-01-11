@@ -169,14 +169,15 @@ describe('Auction object structure', () => {
   })
 
   let AuctionF9 = JSON.parse(JSON.stringify(Auctions[0]))
-  test('Success: Auction decision_until structure', () => {
+  AuctionF9.reported_at = '2022-01-10T13:28:38.566Z'
+  test('Success: Auction decision_from structure', () => {
     const [err9, val9] = s.validate(AuctionF9, AuctionStruct, {
       coerce: true, mask: true
     })
     expect(err9).toBeUndefined()
     expect(val9).toBeDefined()
-    expect(val9).toHaveProperty('decision_until')
-    expect(val9.decision_until).toBeDefined()
-    expect(val9.decision_until).toEqual(val9.reported_at)
+    expect(val9).toHaveProperty('decision_from')
+    expect(val9.decision_from).toBeDefined()
+    expect(val9.decision_from).toEqual(val9.reported_at)
   })
 })
