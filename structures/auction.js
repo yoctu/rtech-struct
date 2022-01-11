@@ -28,7 +28,7 @@ exports.auction = function (config = null) {
     tracking_url: s.optional(Url),
     valid_until: ZoulouDate,
     valid_from: ZoulouDate,
-    decision_until: ZoulouDate,
+    decision_from: ZoulouDate,
     waybills: s.optional(s.size(s.string(), 8, 256)),
     creator: s.size(s.string(), 2, 32),
     visible: s.enums(['public', 'private']),
@@ -100,12 +100,12 @@ exports.auction = function (config = null) {
   const struct = s.defaulted(type, values)
 
   return s.dynamic(value => {
-    if (value.decision_until) {
+    if (value.decision_from) {
       return struct
     }
     if (value.reported_at) {
-      return s.defaulted(struct, { decision_until: value.reported_at })
+      return s.defaulted(struct, { decision_from: value.reported_at })
     }
-    return s.defaulted(struct, { decision_until: (new Date()).toISOString() })
+    return s.defaulted(struct, { decision_from: (new Date()).toISOString() })
   })
 }
