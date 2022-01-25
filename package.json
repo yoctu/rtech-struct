@@ -16,6 +16,7 @@
   "dependencies": {
     "date-fns": "^2.25.0",
     "date-fns-tz": "^1.1.6",
+    "currency-iso": "^1.0.4",
     "is-email": "^1.0.2",
     "is-url": "*",
     "is-uuid": "*",
