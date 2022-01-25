@@ -253,4 +253,21 @@ describe('Request object structure', () => {
         const [error, data] = s.validate(request, Request)
         expect(error).toBeUndefined()
     })
+
+    test('Request have requester valid', () => {
+        request.requester = {
+            name: 'Doe',
+            firstname: 'Jhon',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeTruthy()
+    })
+
+    test('Request have requester invalid', () => {
+        request.requester = {
+            name: 'Doe',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeFalsy()
+    })
 })
