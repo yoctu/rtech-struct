@@ -10,7 +10,7 @@ const { OrderType } = require('./order_type')
 const { GetItNow } = require('./get_it_now')
 const { ValidityTime } = require('./validity_time')
 const { CustomerInterlocutor } = require('./customer_interlocutor')
-const { Requester } = require('./requester')
+const { CallInContact } = require('./call_in_contact')
 
 const Request = s.object({
     key: s.optional(NoEmptyString),
@@ -29,7 +29,7 @@ const Request = s.object({
     creator: s.optional(NoEmptyString),
     target: s.optional(s.size(s.array(NoEmptyString), 0, 100)),
     comment: s.optional(s.size(s.string(), 2, 512)),
-    requester: s.optional(Requester),
+    call_in_contact: s.optional(CallInContact),
 })
 
 module.exports = {

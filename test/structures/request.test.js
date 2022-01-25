@@ -255,7 +255,7 @@ describe('Request object structure', () => {
     })
 
     test('Request have requester valid', () => {
-        request.requester = {
+        request.call_in_contact = {
             name: 'Doe',
             firstname: 'Jhon',
             email: 'jdoe@flash-global.net'
@@ -264,7 +264,7 @@ describe('Request object structure', () => {
     })
 
     test('Request have requester valid with phone', () => {
-        request.requester = {
+        request.call_in_contact = {
             name: 'Doe',
             firstname: 'Jhon',
             phone: '+3522020202020',
@@ -275,7 +275,7 @@ describe('Request object structure', () => {
 
 
     test('Request have requester invalid', () => {
-        request.requester = {
+        request.call_in_contact = {
             name: 'Doe',
             email: 'jdoe@flash-global.net'
         }

@@ -1,7 +1,7 @@
 const s = require('superstruct')
 const Email = s.define('Email', require('is-email'))
 
-const Requester = s.object({
+const CallInContact = s.object({
     name: s.size(s.string(), 2, 128),
     email: Email,
     phone: s.optional(s.size(s.string(), 1, 256)),
@@ -9,5 +9,5 @@ const Requester = s.object({
 })
 
 module.exports = {
-    Requester: Requester
+    CallInContact: CallInContact
 }
