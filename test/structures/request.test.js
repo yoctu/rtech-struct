@@ -263,6 +263,17 @@ describe('Request object structure', () => {
         expect(s.is(request, Request)).toBeTruthy()
     })
 
+    test('Request have requester valid with phone', () => {
+        request.requester = {
+            name: 'Doe',
+            firstname: 'Jhon',
+            phone: '+3522020202020',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeTruthy()
+    })
+
+
     test('Request have requester invalid', () => {
         request.requester = {
             name: 'Doe',
