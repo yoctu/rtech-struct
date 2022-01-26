@@ -253,4 +253,32 @@ describe('Request object structure', () => {
         const [error, data] = s.validate(request, Request)
         expect(error).toBeUndefined()
     })
+
+    test('Request have requester valid', () => {
+        request.call_in_contact = {
+            name: 'Doe',
+            firstname: 'Jhon',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeTruthy()
+    })
+
+    test('Request have requester valid with phone', () => {
+        request.call_in_contact = {
+            name: 'Doe',
+            firstname: 'Jhon',
+            phone: '+3522020202020',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeTruthy()
+    })
+
+
+    test('Request have requester invalid', () => {
+        request.call_in_contact = {
+            name: 'Doe',
+            email: 'jdoe@flash-global.net'
+        }
+        expect(s.is(request, Request)).toBeFalsy()
+    })
 })
