@@ -220,9 +220,37 @@ describe('Request object structure', () => {
     })
 
     test('Request with validity_time', () => {
-        request.validity_time=
-            {'valid_from':'2021-05-06T15:15:00Z', 'valid_until':'2021-05-06T15:15:00+0200' }
+        request.validity_time = {
+            'valid_from':'2021-05-06T15:15:00Z',
+            'valid_until':'2021-05-06T15:15:00+0200',
+        }
 
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
+    test('Request with validity_time and decision_time and defaulted close_after', () => {
+        request.validity_time = {
+            'valid_from':'2021-05-06T15:15:00Z',
+            'valid_until':'2021-05-06T15:15:00+0200',
+        }
+        request.validity_time.decision_time = {
+            'decision_from': '2021-05-06T15:15:00Z',
+        }
+
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
+    test('Request with validity_time and decision_time and setted close_after', () => {
+        request.validity_time = {
+            'valid_from':'2021-05-06T15:15:00Z',
+            'valid_until':'2021-05-06T15:15:00+0200',
+        }
+        request.validity_time.decision_time = {
+            'decision_from': '2021-05-06T15:15:00Z',
+            'close_after': true,
+        }
 
         const [error] = s.validate(request, Request, { coerce: true })
         expect(error).toBeUndefined()
@@ -239,7 +267,7 @@ describe('Request object structure', () => {
     test('Request have comment', () => {
         request.comment = 'A simple comment'
 
-        const [error, data] = s.validate(request, Request)
+        const [error, data] = s.validate(request, Request, { coerce: true })
         expect(error).toBeUndefined()
 
         expect(data).toHaveProperty('comment', 'A simple comment')
@@ -250,7 +278,7 @@ describe('Request object structure', () => {
             email: 'jdoe@flash-global.net'
         }
 
-        const [error, data] = s.validate(request, Request)
+        const [error, data] = s.validate(request, Request, { coerce: true })
         expect(error).toBeUndefined()
     })
 

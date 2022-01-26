@@ -17,7 +17,7 @@ exports.zouloudate = function (s) {
   return s.pattern(s.string(), zdReg)
 }
 
-exports.isodate = function (s) {
+exports.isodate = function () {
   return s.pattern(s.string(), isoReg)
 }
 
