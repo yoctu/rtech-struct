@@ -1,9 +1,9 @@
 const s = require('superstruct')
 const { DateTime } = require('./date')
-const { isodatetime } = require('./lib');
+const { isodate } = require('./lib');
 
 const DecisionTime = s.object({
-    decision_from: isodatetime(),
+    decision_from: isodate(),
     close_after: s.defaulted(s.boolean(), () => false)
 })
 
