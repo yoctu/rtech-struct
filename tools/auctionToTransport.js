@@ -82,7 +82,7 @@ const auctionToTransport = (auction) => {
         street: step.address.street,
         zip_code: step.address.zipcode,
         city: step.address.city,
-        country: step.address.country
+        country: step.address.countryCode || step.address.country
       }
     }
 
