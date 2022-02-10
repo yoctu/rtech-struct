@@ -1,5 +1,7 @@
 const s = require('superstruct')
-const { Request } = require('../../structures/request')
+const rtech_struct = require('../../index')
+const Request = rtech_struct.Request()
+
 const request = {
     source: [
         '82SKOREWAY2'
@@ -280,33 +282,5 @@ describe('Request object structure', () => {
 
         const [error, data] = s.validate(request, Request, { coerce: true })
         expect(error).toBeUndefined()
-    })
-
-    test('Request have requester valid', () => {
-        request.call_in_contact = {
-            name: 'Doe',
-            firstname: 'Jhon',
-            email: 'jdoe@flash-global.net'
-        }
-        expect(s.is(request, Request)).toBeTruthy()
-    })
-
-    test('Request have requester valid with phone', () => {
-        request.call_in_contact = {
-            name: 'Doe',
-            firstname: 'Jhon',
-            phone: '+3522020202020',
-            email: 'jdoe@flash-global.net'
-        }
-        expect(s.is(request, Request)).toBeTruthy()
-    })
-
-
-    test('Request have requester invalid', () => {
-        request.call_in_contact = {
-            name: 'Doe',
-            email: 'jdoe@flash-global.net'
-        }
-        expect(s.is(request, Request)).toBeFalsy()
     })
 })
