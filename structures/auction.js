@@ -6,7 +6,7 @@ const GpsA = require('./lib').gpsarray(s)
 const GpsS = require('./lib').gpsstring(s)
 const Place = require('./place').place(s)
 const PlaceTZ = require('./place').placeTZ(s)
-const {multistep, packageV2, packageV1} = require('./multistep')
+const { multistep, packageV2, packageV1 } = require('./multistep')
 const Contact = require('./contact').auctionContact
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
@@ -60,22 +60,23 @@ exports.auction = function (config = null) {
     vehicles: s.optional(s.array(s.string())),
     incoterm: s.optional(s.enums(['EXW', 'CIP', 'FCA', 'DAP', 'DPU', 'CPT', 'DDP', 'FAS', 'CFR', 'FOB', 'CIF'])),
     transport: s.optional(s.array(s.string())),
-    dimension: s.dynamic((v,p) => {
-        const options = p.branch.map(e => e.hasOwnProperty('options') ? e.options: [])[0]
-        switch (true) {
-            case options.includes('MULTISTEP'):
-                return multistep(config)
-            case options.includes('PKG_V1'):
-                return packageV1
-            case options.includes('PKG_V2'):
-                return packageV2
-            default:
-                return packageV1
-        }
+    dimension: s.dynamic((v, p) => {
+      const options = p.branch.map(e => e.hasOwnProperty('options') ? e.options : [])[0]
+      switch (true) {
+        case options.includes('MULTISTEP'):
+          return multistep(config)
+        case options.includes('PKG_V1'):
+          return packageV1
+        case options.includes('PKG_V2'):
+          return packageV2
+        default:
+          return packageV1
+      }
     }),
     stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
     distance: s.optional(s.union([s.number(), s.string()])),
-    notes: s.optional(s.size(s.string(), 2, 512))
+    notes: s.optional(s.size(s.string(), 2, 512)),
+    decision_from: s.optional(ZoulouDate)
   })
 
   const values = {
