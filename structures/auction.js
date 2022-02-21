@@ -16,6 +16,7 @@ exports.auction = function (config = null) {
   let RelsMax = 10
   if (config && config.app && config.app.usercodename) InstanceName = Instance
   if (config && config.shaq && config.shaq.relsmax) RelsMax = config.shaq.relsmax
+  const currentDate = new Date()
 
   const type = s.type({
     id: s.optional(Uuid),
@@ -84,11 +85,11 @@ exports.auction = function (config = null) {
     options: [],
     creator: 'DEMO',
     visible: 'private',
-    reported_at: (new Date()).toISOString(),
-    valid_until: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-    valid_from: (new Date()).toISOString(),
+    reported_at: currentDate.toISOString(),
+    valid_until: new Date(new Date(currentDate).setDate(currentDate.getDate() + 1)).toISOString(),
+    valid_from: currentDate.toISOString(),
     type: 'auction',
-    name: Instance + new Date().getTime(),
+    name: Instance + currentDate.getTime(),
     status: 'created',
     currency: 'EUR',
     source: [Instance],
@@ -106,6 +107,6 @@ exports.auction = function (config = null) {
     if (value.reported_at) {
       return s.defaulted(struct, { decision_from: value.reported_at })
     }
-    return s.defaulted(struct, { decision_from: (new Date()).toISOString() })
+    return s.defaulted(struct, { decision_from: currentDate.toISOString() })
   })
 }
