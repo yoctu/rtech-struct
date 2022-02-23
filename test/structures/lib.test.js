@@ -1,6 +1,6 @@
 const Index = require('../../index')
 const s = require('superstruct')
-const { Tz, consts } = require('../../structures/lib')
+const { ZuluDateTimeStruct, Tz, consts } = require('../../structures/lib')
 const ConstStruct = consts()
 
 describe('Lib Phone object structure', () => {
@@ -57,5 +57,19 @@ describe('Time zone string format', () => {
 
   test('Fail: Tz is no valid', () => {
     expect(s.is('America/Bulp', Tz)).toBeFalsy()
+  })
+})
+
+describe('Existing datetime format', () => {
+  test('Success: ZuluDateTimeStruct is valid', () => {
+    expect(s.is('2022-03-02T09:05:01.123Z', ZuluDateTimeStruct)).toBeTruthy()
+    expect(s.is('2022-03-02T09:05:01.000Z', ZuluDateTimeStruct)).toBeTruthy()
+    expect(s.is('2022-03-02T09:05:01Z', ZuluDateTimeStruct)).toBeTruthy()
+    expect(s.is(new Date().toISOString(), ZuluDateTimeStruct)).toBeTruthy()
+  })
+
+  test('Fail: ZuluDateTimeStruct is no valid', () => {
+    expect(s.is('2022-02-30T09:05:01.123Z', ZuluDateTimeStruct)).toBeFalsy()
+    expect(s.is('2022-03-33T09:05:01.123Z', ZuluDateTimeStruct)).toBeFalsy()
   })
 })

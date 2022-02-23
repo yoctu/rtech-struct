@@ -1,8 +1,25 @@
 const s = require('superstruct')
 
-const zdReg = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/
+const zdReg = /^(?<dateTime>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(\.\d{3})?Z$/
 const isoReg = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|(\+|\-)\d{2}:?\d{2})$/
 const pReg = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/
+
+exports.ZuluDateTimeStruct = s.define('ZuluDateTimeStruct', (date) => {
+  try {
+    // * Test the regex on the date and only get the datetime group without the µs
+    const rgResult = zdReg.exec(date)
+
+    if (rgResult === null) {
+      return false
+    }
+
+    // * return the comparison between the formatted date and the datetime group
+    // * if the formatted date does not exist, like 30th of February, they will be different
+    return (new Date(date)).toISOString().includes(rgResult.groups.dateTime)
+  } catch (error) {
+    return false
+  }
+});
 
 exports.Tz = s.define('Tz', value => {
   try {

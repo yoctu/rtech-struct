@@ -11,11 +11,11 @@ const toZoulouDate = value => {
   return value.slice(-1) !== 'Z' ? value + 'Z' : value
 }
 
-const ZoulouDate = require('./lib').zouloudate(s)
+const { ZuluDateTimeStruct } = require('./lib');
 
 const Point = s.object({
-  arrival_at: s.coerce(ZoulouDate, s.string(), toZoulouDate),
-  departure_at: s.coerce(ZoulouDate, s.string(), toZoulouDate),
+  arrival_at: s.coerce(ZuluDateTimeStruct, s.string(), toZoulouDate),
+  departure_at: s.coerce(ZuluDateTimeStruct, s.string(), toZoulouDate),
   arrival_at_range: s.optional(s.string()),
   departure_at_range: s.optional(s.string()),
   address: Address,
@@ -48,8 +48,8 @@ const Transport = s.object({
   shippers: s.size(s.array(s.size(s.string(), 2, Infinity)), 1, Infinity),
   shippers_name: s.optional(s.size(s.array(s.size(s.string(), 2, Infinity)), 1, Infinity)),
   status: s.defaulted(s.enums(['planned', 'cancelled', 'running', 'completed', 'expired']), 'planned'),
-  timestamp: s.defaulted(ZoulouDate, () => (new Date()).toISOString()),
-  archived_at: s.optional(ZoulouDate),
+  timestamp: s.defaulted(ZuluDateTimeStruct, () => (new Date()).toISOString()),
+  archived_at: s.optional(ZuluDateTimeStruct),
   tracking_url: s.optional(Url),
   waybills: s.optional(s.size(s.string(), 8, Infinity)),
   creator: s.size(s.string(), 2, Infinity),
