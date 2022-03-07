@@ -1,7 +1,7 @@
 const s = require('superstruct')
 const Uuid = s.define('Uuid', require('is-uuid').v4)
 const Url = s.define('Url', require('is-url'))
-const ZoulouDate = require('./lib').zouloudate(s)
+const { ZuluDateTimeStruct } = require('./lib');
 const GpsA = require('./lib').gpsarray(s)
 const GpsS = require('./lib').gpsstring(s)
 const Place = require('./place').place(s)
@@ -24,12 +24,12 @@ exports.auction = function (config = null) {
     key: s.size(s.string(), 8, 128),
     name: s.size(s.string(), 8, 128),
     status: s.enums(['created', 'cancelled', 'running', 'completed', 'expired', 'failed', 'searching', 'searched', 'validated']),
-    reported_at: ZoulouDate,
-    archived_at: s.optional(ZoulouDate),
+    reported_at: ZuluDateTimeStruct,
+    archived_at: s.optional(ZuluDateTimeStruct),
     tracking_url: s.optional(Url),
-    valid_until: ZoulouDate,
-    valid_from: ZoulouDate,
-    decision_from: ZoulouDate,
+    valid_until: ZuluDateTimeStruct,
+    valid_from: ZuluDateTimeStruct,
+    decision_from: ZuluDateTimeStruct,
     waybills: s.optional(s.size(s.string(), 8, 256)),
     creator: s.size(s.string(), 2, 32),
     visible: s.enums(['public', 'private']),
@@ -49,14 +49,14 @@ exports.auction = function (config = null) {
     puPlace: s.dynamic((v, p) => { return v && v.length === 5 ? Place : PlaceTZ }),
     puLocation: s.optional(s.union([GpsA, GpsS])),
     puContact: s.optional(Contact),
-    puDate: ZoulouDate,
+    puDate: ZuluDateTimeStruct,
     extras: s.defaulted(s.optional(s.array(s.string())), []),
-    puDateRange: s.optional(ZoulouDate),
+    puDateRange: s.optional(ZuluDateTimeStruct),
     dePlace: s.dynamic((v, p) => { return v && v.length === 5 ? Place : PlaceTZ }),
     deLocation: s.optional(s.union([GpsA, GpsS])),
     deContact: s.optional(Contact),
-    deDate: ZoulouDate,
-    deDateRange: s.optional(ZoulouDate),
+    deDate: ZuluDateTimeStruct,
+    deDateRange: s.optional(ZuluDateTimeStruct),
     files: s.optional(s.array(s.string())),
     vehicles: s.optional(s.array(s.string())),
     incoterm: s.optional(s.enums(['EXW', 'CIP', 'FCA', 'DAP', 'DPU', 'CPT', 'DDP', 'FAS', 'CFR', 'FOB', 'CIF'])),

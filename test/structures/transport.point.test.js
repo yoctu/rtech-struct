@@ -170,7 +170,7 @@ describe('Transport object structure', () => {
     }, struct.point)
 
     expect(error1).toBeInstanceOf(s.StructError)
-    expect(error1.type).toBe('string')
+    expect(error1.type).toBe('ZuluDateTimeStruct')
     expect(error1.path[0]).toBe('arrival_at')
   })
 
