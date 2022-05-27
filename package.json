@@ -14,23 +14,24 @@
     "url": "git+https://github.com/yoctu/rtech-struct.git"
   },
   "dependencies": {
+    "currency-iso": "^1.0.4",
     "date-fns": "^2.25.0",
     "date-fns-tz": "^1.1.6",
-    "currency-iso": "^1.0.4",
     "is-email": "^1.0.2",
     "is-url": "*",
     "is-uuid": "*",
     "superstruct": "^0.15.3",
+    "typescript": "^4.7.2",
     "uuid": "*"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^24.7.0",
     "eslint-plugin-node": "*",
     "eslint-plugin-standard": "*",
-    "jest": "^27.3.1",
-    "@types/jest": "^27.0.2"
+    "jest": "^27.3.1"
   },
   "engines": {
     "node": ">= 14.0.0",
