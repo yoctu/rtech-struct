@@ -32,7 +32,10 @@ const ENTITY_TYPE = 'sfu/package';
 const Package = s.object({
   tracking_id: s.defaulted(s.size(s.string(), TRACKING_ID_SIZE_MIN, TRACKING_ID_SIZE_MAX), uuidv4),
   owner: s.size(s.string(), OWNER_SIZE_MIN, OWNER_SIZE_MAX),
-  status: s.optional(s.defaulted(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered']), 'waiting_for_pickup')),
+  status: s.defaulted(
+    s.optional(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered', 'waiting_for_pickup/position_needed', 'waiting_for_pickup/waiting_pickup', 'waiting_for_pickup/wrong_pickup_location', 'picked_up/position_needed', 'picked_up/waiting_delivery', 'picked_up/wrong_delivery_location'])),
+    'waiting_for_pickup/waiting_pickup'
+  ),
   stackable: s.defaulted(s.enums(['no', '1', '2', '3', '4']), 'no'),
   quantity: s.defaulted(s.integer(), 1),
   references: s.optional(s.size(s.array(s.size(s.string(), REFERENCE_SIZE_MIN, REFERENCE_SIZE_MAX)), REFERENCES_LENGTH_MIN, REFERENCES_LENGTH_MAX)),
