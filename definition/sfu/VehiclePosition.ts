@@ -1,5 +1,7 @@
 import { Position } from './Address';
 
-export default interface VehiclePosition {
+type VehiclePosition = {
     data: Position
-}
+};
+
+export default VehiclePosition;

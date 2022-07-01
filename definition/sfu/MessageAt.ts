@@ -1,4 +1,6 @@
-export default interface MessageAt {
+type MessageAt = {
     at: string,
     message: string,
-}
+};
+
+export default MessageAt;

@@ -2,7 +2,7 @@ import Package from './Package';
 import Point from './Point';
 import Vehicle from './Vehicle';
 
-export default interface Transport {
+type Transport = {
     id: string,
     key: string,
     type: 'sfu/transport',
@@ -16,4 +16,6 @@ export default interface Transport {
     tracking_url?: string,
     incoterm?: string,
     creator: string,
-}
+};
+
+export default Transport;

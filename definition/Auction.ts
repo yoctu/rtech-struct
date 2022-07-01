@@ -1,4 +1,4 @@
-export default interface Auction {
+type Auction = {
     id: string,
     type: string,
     key: string,
@@ -45,4 +45,6 @@ export default interface Auction {
     stackable?: 'yes' | 'no' | 'No' | 'Yes' | 0 | 1,
     distance: number | string,
     notes?: string,
-}
+};
+
+export default Auction;

@@ -1,7 +1,7 @@
 import Carrier from './Carrier';
 import Driver from './Driver';
 
-export default interface Vehicle {
+type Vehicle = {
     carrier: Carrier,
     drivers?: Driver[],
     tracking_provider: string,
@@ -11,4 +11,6 @@ export default interface Vehicle {
     information?: string,
     brand?: string,
     packages: string[],
-}
+};
+
+export default Vehicle;

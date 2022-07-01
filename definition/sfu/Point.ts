@@ -1,7 +1,7 @@
 import Address from './Address';
 import Contact from './Contact';
 
-export default interface Point {
+type Point = {
     key: string,
     address: Address,
     point_types?: string[],
@@ -14,4 +14,6 @@ export default interface Point {
     packages_to_load: string[],
     packages_to_unload: string[],
     comment?: string,
-}
+};
+
+export default Point;
