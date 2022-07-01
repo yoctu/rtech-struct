@@ -1,15 +1,15 @@
-export interface ADR {
+type ADR = {
     un_code: string,
     class: string,
     packing_group: string,
-}
+};
 
-export interface GoodValue {
+type GoodValue = {
     currency: string,
     value: number,
-}
+};
 
-export default interface Package {
+type Package = {
     tracking_id: string,
     owner: string,
     status: 'waiting_for_pickup' | 'pickup_delayed' | 'picked_up' | 'delivery_delayed' | 'delivered',
@@ -25,4 +25,7 @@ export default interface Package {
     adr?: ADR,
     comment?: string,
     good_value?: GoodValue,
-}
+};
+
+export { ADR, GoodValue };
+export default Package;

@@ -1,9 +1,9 @@
-export interface Position {
+type Position = {
     lat: number,
     lon: number,
-}
+};
 
-export default interface Address {
+type Address = {
     street: string,
     additional_street?: string,
     city: string,
@@ -13,4 +13,7 @@ export default interface Address {
     timezone_string: string,
     position: Position,
     type: 'sfu/address',
-}
+};
+
+export { Position };
+export default Address;

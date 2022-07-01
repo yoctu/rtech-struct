@@ -1,4 +1,4 @@
-export default interface Bid {
+type Bid = {
     id: string,
     type: string,
     key: string,
@@ -35,4 +35,6 @@ export default interface Bid {
     tms: string,
     price: number | string,
     priceDetails?: string[],
-}
+};
+
+export default Bid;
