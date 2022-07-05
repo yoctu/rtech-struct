@@ -1,6 +1,6 @@
 type RequestedTransport = {
     way: string[],
-    vehicles: string,
+    vehicles: string[],
     distances: number[],
 };
 
