@@ -34,7 +34,7 @@ const Package = s.object({
   owner: s.size(s.string(), OWNER_SIZE_MIN, OWNER_SIZE_MAX),
   status: s.defaulted(
     s.optional(s.enums(['waiting_for_pickup', 'pickup_delayed', 'picked_up', 'delivery_delayed', 'delivered', 'waiting_for_pickup/position_needed', 'waiting_for_pickup/waiting_pickup', 'waiting_for_pickup/wrong_pickup_location', 'picked_up/position_needed', 'picked_up/waiting_delivery', 'picked_up/wrong_delivery_location'])),
-    'waiting_for_pickup/waiting_pickup'
+    'waiting_for_pickup'
   ),
   stackable: s.defaulted(s.enums(['no', '1', '2', '3', '4']), 'no'),
   quantity: s.defaulted(s.integer(), 1),
