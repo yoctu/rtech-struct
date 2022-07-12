@@ -1,3 +1,5 @@
+import Bid from './Bid';
+
 type Auction = {
     id: string,
     type: string,
@@ -45,6 +47,7 @@ type Auction = {
     stackable?: 'yes' | 'no' | 'No' | 'Yes' | 0 | 1,
     distance: number | string,
     notes?: string,
+    bid?: Bid
 };
 
 export default Auction;
