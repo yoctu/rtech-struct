@@ -1,4 +1,4 @@
-import Bid from "./Bid";
+import Bid from './Bid';
 
 type Auction = {
     id: string,
