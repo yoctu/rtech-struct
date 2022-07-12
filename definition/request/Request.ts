@@ -15,7 +15,7 @@ type Request = {
     packages: Package[],
     points: PartialPoint[],
     transports: RequestedTransport[],
-    extras: string[],
+    extras?: string[],
     references?: Reference[],
     customer_interlocutor?: CustomerInterlocutor,
     custom_fields?: CustomField[],
