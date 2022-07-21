@@ -1,6 +1,6 @@
 import Carrier from './Carrier';
 import Driver from './Driver';
-import VehiclePosition from './VehiclePosition';
+import { Position } from './Address';
 
 type Vehicle = {
     carrier: Carrier,
@@ -12,7 +12,7 @@ type Vehicle = {
     information?: string,
     brand?: string,
     packages: string[],
-    last_position?: VehiclePosition
+    last_position?: Position
 };
 
 export default Vehicle;
