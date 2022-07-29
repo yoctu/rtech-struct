@@ -10,7 +10,6 @@ const event = require('./event')
 const messageAt = require('./messageAt')
 const pointDates = require('./pointDates')
 const vehiclePosition = require('./vehiclePosition')
-const newPackageStatus = require('./newPackageStatus')
 
 module.exports = {
     address,
@@ -25,5 +24,4 @@ module.exports = {
     messageAt,
     pointDates,
     vehiclePosition,
-    newPackageStatus
 }
