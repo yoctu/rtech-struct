@@ -21,3 +21,17 @@ exports.completePlaceTZ = function (s) {
             s.optional(s.size(s.string(), 2, 128))
         ])
 }
+
+exports.placeChecker = s.dynamic((v, p) => {
+    let size = v ? v.length : 0;
+    switch (size) {
+        case 5:
+            return exports.place(s)
+        case 6:
+            return exports.placeTZ(s)
+        case 7:
+            return exports.completePlaceTZ(s)
+        default:
+            return exports.place(s)
+    }
+});
