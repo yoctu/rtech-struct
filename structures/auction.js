@@ -6,7 +6,7 @@ const GpsA = require('./lib').gpsarray(s)
 const GpsS = require('./lib').gpsstring(s)
 const Place = require('./place').place(s)
 const PlaceTZ = require('./place').placeTZ(s)
-const PlaceTZ2 = require('./place').placeTZ2(s)
+const CompletePlaceTZ = require('./place').completePlaceTZ(s)
 const {multistep, packageV2, packageV1} = require('./multistep')
 const Contact = require('./contact').auctionContact
 
@@ -18,6 +18,19 @@ exports.auction = function (config = null) {
     if (config && config.app && config.app.usercodename) InstanceName = Instance
     if (config && config.shaq && config.shaq.relsmax) RelsMax = config.shaq.relsmax
     const currentDate = new Date()
+    const placeSizeChecker = (v, p) => {
+        let size = v ? v.length : 0;
+        switch (size) {
+            case 5:
+                return Place
+            case 6:
+                return PlaceTZ
+            case 7:
+                return CompletePlaceTZ
+            default:
+                return Place
+        }
+    };
 
     const type = s.type({
         id: s.optional(Uuid),
@@ -47,37 +60,13 @@ exports.auction = function (config = null) {
         bestbid: s.optional(Uuid),
         getitnow: s.optional(s.number()),
         winningbid: s.optional(Uuid),
-        puPlace: s.dynamic((v, p) => {
-            let size = v ? v.length : 0;
-            switch (size) {
-                case 5:
-                    return Place
-                case 6:
-                    return PlaceTZ
-                case 7:
-                    return PlaceTZ2
-                default:
-                    return Place
-            }
-        }),
+        puPlace: s.dynamic(placeSizeChecker),
         puLocation: s.optional(s.union([GpsA, GpsS])),
         puContact: s.optional(Contact),
         puDate: ZuluDateTimeStruct,
         extras: s.defaulted(s.optional(s.array(s.string())), []),
         puDateRange: s.optional(ZuluDateTimeStruct),
-        dePlace: s.dynamic((v, p) => {
-            let size = v ? v.length : 0;
-            switch (size) {
-                case 5:
-                    return Place
-                case 6:
-                    return PlaceTZ
-                case 7:
-                    return PlaceTZ2
-                default:
-                    return Place
-            }
-        }),
+        dePlace: s.dynamic(placeSizeChecker),
         deLocation: s.optional(s.union([GpsA, GpsS])),
         deContact: s.optional(Contact),
         deDate: ZuluDateTimeStruct,
