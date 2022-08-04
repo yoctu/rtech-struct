@@ -245,7 +245,7 @@ describe('Auction object structure', () => {
         '1', '100', '120', '120', '5', '200', '200', 'insurance',
         '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance'
     ]
-    test('Success: dimension PKG_V2 fail', () => {
+    test('Failed: dimension PKG_V2 fail', () => {
         const [error, entity] = s.validate(AuctionF14, AuctionStruct, {
             coerce: true, mask: true
         })
@@ -260,7 +260,7 @@ describe('Auction object structure', () => {
         '1', '100', '120', '120', '5', 'no',
         '1', '100', '120', '120', '5'
     ]
-    test('Success: dimension PKG_V1 fail', () => {
+    test('Failed: dimension PKG_V1 fail', () => {
         const [error, entity] = s.validate(AuctionF15, AuctionStruct, {
             coerce: true, mask: true
         })
