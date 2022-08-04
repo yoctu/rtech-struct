@@ -42,7 +42,7 @@ const Auctions = [
         deLocation: ["48.8707626", "2.319565"],
         deContact: ["Sara home", "Bertrand", "bertrand@yoctu.com", "00333333333"],
         deDate: new Date(new Date().setDate((new Date().getDate() + 2))).toISOString(),
-        dimension: ["2", "100", "100", "10", "", "no", "", "", "0",
+        dimension: ["2", "100", "100", "10", "10", "", "no", "", "10", "",
             "EG2103CF36-A", "35 RUE DE CALAIS", "67100", "STRASBOURG", "France", "FR", "48.5252,7.7824", "Europe/Paris", "test1", "test1", "test1@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00",
             "EG2103CF36-B", "14 RUE GORGE DE LOUP", "69009", "LYON", "France", "FR", "45.77,4.8041", "Europe/Paris", "test2", "test2", "test2@test.fr", "090809080908", "2021-03-01T01:00:00", "2021-03-01T01:00:00"
         ],
@@ -206,5 +206,65 @@ describe('Auction object structure', () => {
         expect(entity).toHaveProperty('dePlace')
         expect(entity.puPlace[6]).toStrictEqual('Appartement 5 2ème étage')
         expect(entity.dePlace[6]).toStrictEqual('Appartement 6 42ème étage')
+    })
+
+    const AuctionF12 = JSON.parse(JSON.stringify(Auctions[0]))
+    AuctionF12.options = ['PKG_V2']
+    AuctionF12.dimension = [
+        '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance',
+        '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance',
+        '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance'
+    ]
+    test('Success: dimension PKG_V2 with more than 9 data', () => {
+        const [error, entity] = s.validate(AuctionF12, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeUndefined()
+        expect(entity).toBeDefined()
+    })
+
+    const AuctionF13 = JSON.parse(JSON.stringify(Auctions[0]))
+    AuctionF13.options = ['PKG_V1']
+    AuctionF13.dimension = [
+        '1', '100', '120', '120', '5', 'no',
+        '1', '100', '120', '120', '5', 'no',
+        '1', '100', '120', '120', '5', 'no'
+    ]
+    test('Success: dimension PKG_V1 with more than 6 data', () => {
+        const [error, entity] = s.validate(AuctionF13, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeUndefined()
+        expect(entity).toBeDefined()
+    })
+
+    const AuctionF14 = JSON.parse(JSON.stringify(Auctions[0]))
+    AuctionF14.options = ['PKG_V2']
+    AuctionF14.dimension = [
+        '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance',
+        '1', '100', '120', '120', '5', '200', '200', 'insurance',
+        '1', '100', '120', '120', '5', 'no', '200', '200', 'insurance'
+    ]
+    test('Failed: dimension PKG_V2 fail', () => {
+        const [error, entity] = s.validate(AuctionF14, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeDefined()
+        expect(error).toHaveProperty('key', 'dimension')
+    })
+
+    const AuctionF15 = JSON.parse(JSON.stringify(Auctions[0]))
+    AuctionF15.options = ['PKG_V1']
+    AuctionF15.dimension = [
+        '1', '100', '120', '120', '5', 'no',
+        '1', '100', '120', '120', '5', 'no',
+        '1', '100', '120', '120', '5'
+    ]
+    test('Failed: dimension PKG_V1 fail', () => {
+        const [error, entity] = s.validate(AuctionF15, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeDefined()
+        expect(error).toHaveProperty('key', 'dimension')
     })
 })
