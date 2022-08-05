@@ -9,10 +9,21 @@ type GoodValue = {
     value: number,
 };
 
+type Issue = 'WAITING_ON_PU' |
+    'WAITING_ON_DE' |
+    'LATE_FOR_PU_PLANNED' |
+    'LATE_FOR_DE_PLANNED' |
+    'WRONG_PU_LOCATION' |
+    'WRONG_DE_LOCATION' |
+    'POSITION_NEEDED_BEFORE_PU' |
+    'POSITION_NEEDED_BEFORE_DE'
+;
+
 type Package = {
     tracking_id: string,
     owner: string,
-    status: 'waiting_for_pickup' | 'pickup_delayed' | 'picked_up' | 'delivery_delayed' | 'delivered' | 'waiting_for_pickup/position_needed' | 'waiting_for_pickup/waiting_pickup' | 'waiting_for_pickup/wrong_pickup_location' | 'picked_up/position_needed' | 'picked_up/waiting_delivery' | 'picked_up/wrong_delivery_location',
+    status: 'waiting_for_pickup' | 'pickup_delayed' | 'picked_up' | 'delivery_delayed' | 'delivered',
+    issues: Issue[],
     stackable: 'no' | '1' | '2' | '3' | '4',
     quantity: number,
     references?: string[],
@@ -27,5 +38,5 @@ type Package = {
     good_value?: GoodValue,
 };
 
-export { ADR, GoodValue };
+export { ADR, GoodValue, Issue };
 export default Package;
