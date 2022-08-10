@@ -1,5 +1,5 @@
 const s = require('superstruct')
-const {Message} = require('../../structures/message')
+const { Message } = require('../../structures/message')
 
 const message = {
     key: 'thekey',
