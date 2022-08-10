@@ -1,11 +1,14 @@
-const s = require('superstruct')
-const Uuid = s.define('Uuid', require('is-uuid').v4)
+const s = require('superstruct');
 const { ZuluDateTimeStruct } = require('./lib');
+const uuid = require('uuid');
+const isUuid = require('is-uuid');
+
+const Uuid = s.define('Uuid', isUuid.v4);
 
 const Message = s.type({
-    id: s.defaulted(Uuid, require('uuid').v4()),
-    date: s.defaulted(ZuluDateTimeStruct, new Date().toISOString()),
-    type: s.defaulted(s.enums(['message']), 'message'),
+    id: s.defaulted(Uuid, uuid.v4()),
+    date: s.defaulted(ZuluDateTimeStruct, () => new Date().toISOString()),
+    type: s.defaulted(s.literal('message'), 'message'),
     channel: s.optional(s.string()),
     key: s.string(),
     subject: s.string(),
@@ -14,8 +17,8 @@ const Message = s.type({
     from: s.string(),
     source: s.array(s.string()),
     target: s.array(s.string())
-})
+});
 
 module.exports = {
     Message
-}
+};
