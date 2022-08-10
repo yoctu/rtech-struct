@@ -11,6 +11,7 @@ const { Request } = require('./structures/request')
 const sfu = require('./structures/sfu')
 const notification = require('./structures/notification')
 const extractPackageAndStepInformation = require('./tools/auction/extractPackageAndStepInformation')
+const { Message } = require('./structures/message')
 
 exports.address = () => address
 
@@ -45,6 +46,8 @@ exports.sfu = () => sfu
 exports.notification = () => notification
 
 exports.Request = () => Request
+
+exports.Message = () => Message
 
 exports.tools = {
     auction: {
