@@ -9,9 +9,9 @@ describe('Notification object structure', () => {
       content: {'test':'test'},
       notification_type: 'auction won',
       id: require('uuid').v4(),
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      acknowledges: ['user']
     }, inApp.structure)).toBeTruthy()
-
 
     const [err0, val0] = s.validate({
       content: {'test':'test'},
@@ -24,6 +24,7 @@ describe('Notification object structure', () => {
 
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
+    expect(val0).toHaveProperty('acknowledges', [])
   })
 
   test('Fail: Notification structure fail', () => {
@@ -42,5 +43,15 @@ describe('Notification object structure', () => {
     })
 
     expect(error2).toHaveProperty('key', 'notification_type')
+
+    let [error3] = s.validate({
+      content: {'test':'test'},
+      notification_type: 'auction won',
+      acknowledges: ['user', 666]
+    }, inApp.structure, {
+      coerce: true, mask: true
+    })
+
+    expect(error3).toHaveProperty('path', ['acknowledges', 1])
   })
 })
