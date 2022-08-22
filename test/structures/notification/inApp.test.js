@@ -25,6 +25,7 @@ describe('Notification object structure', () => {
     expect(err0).toBeUndefined()
     expect(val0).toBeDefined()
     expect(val0).toHaveProperty('acknowledges', [])
+    expect(val0).toHaveProperty('recipients', [])
   })
 
   test('Fail: Notification structure fail', () => {
@@ -53,5 +54,15 @@ describe('Notification object structure', () => {
     })
 
     expect(error3).toHaveProperty('path', ['acknowledges', 1])
+
+    let [error4] = s.validate({
+      content: {'test':'test'},
+      notification_type: 'auction won',
+      recipients: ['user', 666]
+    }, inApp.structure, {
+      coerce: true, mask: true
+    })
+
+    expect(error4).toHaveProperty('path', ['recipients', 1])
   })
 })

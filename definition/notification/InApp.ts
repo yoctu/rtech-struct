@@ -4,6 +4,8 @@ type InApp = {
     createdAt: string,
     notification_type: string,
     content: Record<string, unknown>,
+    acknowledges?: string[],
+    recipients?: string[],
 };
 
 export default InApp;
