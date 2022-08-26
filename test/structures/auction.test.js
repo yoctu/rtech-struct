@@ -267,4 +267,49 @@ describe('Auction object structure', () => {
         expect(error).toBeDefined()
         expect(error).toHaveProperty('key', 'dimension')
     })
+
+    test('Success: with default tags', () => {
+        const auction = JSON.parse(JSON.stringify(Auctions[0]))
+
+        const [error, entity] = s.validate(auction, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeUndefined()
+        expect(entity).toHaveProperty('tags', [])
+    })
+
+    test('Success: with tags', () => {
+        const auction = JSON.parse(JSON.stringify(Auctions[0]))
+
+        auction.tags = ['THETAG']
+        const [error, entity] = s.validate(auction, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(error).toBeUndefined()
+        expect(entity).toHaveProperty('tags', ['THETAG'])
+    })
+
+    test('Failed: wrong type tags', () => {
+        const auction = JSON.parse(JSON.stringify(Auctions[0]))
+
+        auction.tags = 666
+        const [error, entity] = s.validate(auction, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(entity).toBeUndefined()
+        expect(error).toBeDefined()
+        expect(error).toHaveProperty('key', 'tags')
+    })
+
+    test('Failed: wrong type in array for tags', () => {
+        const auction = JSON.parse(JSON.stringify(Auctions[0]))
+
+        auction.tags = ['THETAG', 666]
+        const [error, entity] = s.validate(auction, AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(entity).toBeUndefined()
+        expect(error).toBeDefined()
+        expect(error).toHaveProperty('path', ['tags', 1])
+    })
 })
