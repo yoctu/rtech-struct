@@ -47,7 +47,8 @@ type Auction = {
     stackable?: 'yes' | 'no' | 'No' | 'Yes' | 0 | 1,
     distance: number | string,
     notes?: string,
-    bid?: Bid
+    bid?: Bid,
+    tags?: string[],
 };
 
 export default Auction;
