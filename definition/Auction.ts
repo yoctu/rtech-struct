@@ -48,7 +48,7 @@ type Auction = {
     distance: number | string,
     notes?: string,
     bid?: Bid,
-    tags?: string[],
+    tags: string[],
 };
 
 export default Auction;
