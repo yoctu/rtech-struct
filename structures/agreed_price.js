@@ -1,7 +1,7 @@
 const s = require('superstruct')
 
 const AgreedPrice = s.object({
-    type: s.literal('agreed_price')
+    type: s.literal('agreed-price')
 })
 
 module.exports = {
