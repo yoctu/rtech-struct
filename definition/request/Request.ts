@@ -5,8 +5,11 @@ import Reference from './Reference';
 import CustomerInterlocutor from './CustomerInterlocutor';
 import CustomField from './CustomField';
 import Invoice from './Invoice';
-import OrderType from './OrderType';
 import GetItNow from './GetItNow';
+import Spot from './Spot';
+import AgreedPrice from './AgreedPrice';
+import MarketplaceSpot from './MarketplaceSpot';
+import VirtualOrder from './VirtualOrder';
 import ValidityTime from './ValidityTime';
 
 type Request = {
@@ -20,7 +23,7 @@ type Request = {
     customer_interlocutor?: CustomerInterlocutor,
     custom_fields?: CustomField[],
     invoice?: Invoice,
-    order_type?: OrderType | GetItNow,
+    order_type?: Spot | AgreedPrice | VirtualOrder | MarketplaceSpot | GetItNow,
     validity_time?: ValidityTime,
     issuer?: string,
     creator?: string,

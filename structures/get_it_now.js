@@ -2,7 +2,7 @@ const s = require('superstruct')
 const { PositiveNumber } = require('./number')
 
 const GetItNow = s.object({
-    type: s.enums(['getitnow']),
+    type: s.literal('getitnow'),
     amount: PositiveNumber
 })
 
