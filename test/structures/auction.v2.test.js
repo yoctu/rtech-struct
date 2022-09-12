@@ -7,7 +7,7 @@ const Auctions = [
         valid_from: new Date().toISOString(),
         valid_until: new Date(new Date().getTime() + 300000).toISOString(),
         key: "jest-" + Math.round((new Date()).getTime()),
-        source: ["DEMO"],
+        source: ["DEMO", "TOTO", "RANDOM"],
         target: ["DEMOEX"],
         puPlace: ["630 rue salvadore allende", "57390", "audin-le-tiche", "France", "FR"],
         puLocation: "49.4748422,5.9388295",
@@ -90,6 +90,14 @@ describe('Auction object structure', () => {
         })
         expect(err0).toBeUndefined()
         expect(val0).toBeDefined()
+    })
+    test('Success: Multisource auction structure', () => {
+        const [err0, val0] = s.validate(Auctions[0], AuctionStruct, {
+            coerce: true, mask: true
+        })
+        expect(err0).toBeUndefined()
+        expect(val0).toBeDefined()
+        expect(val0.source).toEqual(["DEMO", "TOTO", "RANDOM"])
     })
     let AuctionF1 = JSON.parse(JSON.stringify(Auctions[0]))
     AuctionF1.puContact = ["Doom Center", "Laurent", "lav@yoctu.com", "toto"]
