@@ -246,7 +246,8 @@ describe('Request object structure', () => {
     test('Request with order_type marketplace_spot', () => {
         request.order_type=
             {
-                'type': 'marketplace_spot'
+                'type': 'marketplace_spot',
+                'delegated_target': ['carrier1', 'carrier2'],
             }
 
 
