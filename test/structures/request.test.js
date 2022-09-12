@@ -221,6 +221,51 @@ describe('Request object structure', () => {
         expect(error).toBeUndefined()
     })
 
+    test('Request with order_type spot', () => {
+        request.order_type=
+            {
+                'type': 'spot'
+            }
+
+
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
+    test('Request with order_type agreed-price', () => {
+        request.order_type=
+            {
+                'type': 'agreed-price'
+            }
+
+
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
+    test('Request with order_type marketplace_spot', () => {
+        request.order_type=
+            {
+                'type': 'marketplace_spot',
+                'delegated_target': ['carrier1', 'carrier2'],
+            }
+
+
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
+    test('Request with order_type virtual_order', () => {
+        request.order_type=
+            {
+                'type': 'virtual_order'
+            }
+
+
+        const [error] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
+
     test('Request with validity_time', () => {
         request.validity_time = {
             'valid_from':'2021-05-06T15:15:00Z',
