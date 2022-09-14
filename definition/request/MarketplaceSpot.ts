@@ -1,5 +1,5 @@
 type MarketplaceSpot = {
-    type: 'marketplace_spot',
+    type: 'marketplace-spot',
     delegated_target: string[],
 };
 
