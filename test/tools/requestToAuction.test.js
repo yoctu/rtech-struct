@@ -7,7 +7,12 @@ const auction = require('./entities/auction')
 
 describe('request to auction tool', () => {
     test('validate minimum data', () => {
-        const r = requestToAuction(request)
+        const r = requestToAuction(request, {
+            company_name: 'John',
+            name: 'Doe',
+            email: 'todoemail@mail.fr',
+            phone: '+333333333',
+        })
 
         expect(r.key).toStrictEqual(auction.key)
         expect(r.name).toStrictEqual(auction.key)
@@ -29,7 +34,12 @@ describe('request to auction tool', () => {
     })
 
     test('validate auction struct', () => {
-        const r = requestToAuction(request)
+        const r = requestToAuction(request, {
+            company_name: 'John',
+            name: 'Doe',
+            email: 'todoemail@mail.fr',
+            phone: '+333333333',
+        })
         const [err, val] = s.validate(r, auctionStruct, {
             coerce: true, mask: true
         })

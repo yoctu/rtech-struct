@@ -10,7 +10,7 @@ const calcDistance = (transports) => {
     return result
 }
 
-const pointInfo = (point, suffix) => {
+const pointInfo = (point, suffix, defaultOption) => {
     const place = [
         point.address.street || '',
         point.address.zip_code,
@@ -25,10 +25,10 @@ const pointInfo = (point, suffix) => {
     return {
         [suffix + 'Place']: place,
         [suffix + 'Contact']: [
-            point.contact.company_name || 'John',
-            point.contact.name || 'Doe',
-            point.contact.email || 'todoemail@mail.fr',
-            point.contact.phone || '+333333333',
+            point.contact.company_name || defaultOption.company_name,
+            point.contact.name || defaultOption.name,
+            point.contact.email || defaultOption.email,
+            point.contact.phone || defaultOption.phone,
         ],
         [suffix + 'Date']: point.arrival_from,
         [suffix + 'DateRange']: point.arrival_until,
@@ -39,7 +39,7 @@ const pointInfo = (point, suffix) => {
     }
 }
 
-const dimension = (key, points, packages) => {
+const dimension = (key, points, packages, defaultOption) => {
     let result = []
 
     for (const p of packages) {
@@ -75,10 +75,10 @@ const dimension = (key, points, packages) => {
                     point.address.position.lon.toString()
                 )
                 result.push(point.address.timezone_string)
-                result.push(point.contact.company_name || '')
-                result.push(point.contact.name || '')
-                result.push(point.contact.email || '')
-                result.push(point.contact.phone || '')
+                result.push(point.contact.company_name || defaultOption.company_name)
+                result.push(point.contact.name || defaultOption.name)
+                result.push(point.contact.email || defaultOption.email)
+                result.push(point.contact.phone || defaultOption.phone)
                 result.push(point.arrival_from)
                 result.push(point.arrival_until)
             }
@@ -97,7 +97,7 @@ const checkValidityTime = (time) => {
     }
 }
 
-const requestToAuction = (request) => {
+const requestToAuction = (request, defaultOption = {}) => {
     return {
         key: request.key,
         name: request.key,
@@ -106,9 +106,9 @@ const requestToAuction = (request) => {
         source: request.source,
         distance: calcDistance(request.transports),
         options: ['MULTISTEP'],
-        ...pointInfo(request.points.find((point) => point.key === 'A'), 'pu'),
-        ...pointInfo(request.points.find((point) => point.key === 'B'), 'de'),
-        dimension: dimension(request.key, request.points, request.packages),
+        ...pointInfo(request.points.find((point) => point.key === 'A'), 'pu', defaultOption),
+        ...pointInfo(request.points.find((point) => point.key === 'B'), 'de', defaultOption),
+        dimension: dimension(request.key, request.points, request.packages, defaultOption),
         ...checkValidityTime(request.validity_time),
         notes: request.comment,
         extras: request.extras,
