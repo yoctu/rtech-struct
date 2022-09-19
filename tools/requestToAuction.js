@@ -10,16 +10,20 @@ const calcDistance = (transports) => {
     return result
 }
 
-const placeInfo = (point, suffix) => {
+const pointInfo = (point, suffix) => {
+    const place = [
+        point.address.street || '',
+        point.address.zip_code,
+        point.address.city,
+        point.address.country,
+        point.address.country,
+        point.address.timezone_string,
+    ]
+
+    if (point.address.additional_street) place.push(point.address.additional_street)
+
     return {
-        [suffix + 'Place']: [
-            point.address.street || '',
-            point.address.zip_code,
-            point.address.city,
-            point.address.country,
-            point.address.country,
-            point.address.timezone_string,
-        ],
+        [suffix + 'Place']: place,
         [suffix + 'Contact']: [
             point.contact.company_name || 'John',
             point.contact.name || 'Doe',
@@ -57,7 +61,10 @@ const dimension = (key, points, packages) => {
             if (point.package_to_load.includes(p.tracking_id) ||
                 point.package_to_unload.includes(p.tracking_id)) {
                 result.push(key + '-' + point.key)
-                result.push(point.address.street || '')
+                result.push(
+                    (point.address.street || '') +
+                    (point.address.additional_street ? '\n' + point.address.additional_street : '')
+                )
                 result.push(point.address.zip_code)
                 result.push(point.address.city)
                 result.push(point.address.country)
@@ -80,6 +87,16 @@ const dimension = (key, points, packages) => {
     return result
 }
 
+const checkValidityTime = (time) => {
+    if (!time) return time
+
+    return {
+        valid_from: time.valid_from,
+        valid_until: time.valid_until,
+        decision_from: time.decision_time ? time.decision_time.decision_from : undefined
+    }
+}
+
 const requestToAuction = (request) => {
     return {
         key: request.key,
@@ -89,9 +106,14 @@ const requestToAuction = (request) => {
         source: request.source,
         distance: calcDistance(request.transports),
         options: ['MULTISTEP'],
-        ...placeInfo(request.points.find((point) => point.key === 'A'), 'pu'),
-        ...placeInfo(request.points.find((point) => point.key === 'B'), 'de'),
+        ...pointInfo(request.points.find((point) => point.key === 'A'), 'pu'),
+        ...pointInfo(request.points.find((point) => point.key === 'B'), 'de'),
         dimension: dimension(request.key, request.points, request.packages),
+        ...checkValidityTime(request.validity_time),
+        notes: request.comment,
+        extras: request.extras,
+        incoterm: request.transports[0].incoterm,
+        vehicles: request.transports[0].vehicles
     }
 }
 

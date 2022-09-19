@@ -123,7 +123,6 @@ module.exports = {
                 468,
                 308
             ],
-            "incoterm": ""
         }
     ],
     "source": [
