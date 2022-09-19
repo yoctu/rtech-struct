@@ -5,10 +5,10 @@ const requestToAuction = require('../../tools/requestToAuction')
 const request = require('./entities/request')
 const auction = require('./entities/auction')
 
-const r = requestToAuction(request)
-
 describe('request to auction tool', () => {
     test('validate minimum data', () => {
+        const r = requestToAuction(request)
+
         expect(r.key).toStrictEqual(auction.key)
         expect(r.name).toStrictEqual(auction.key)
         expect(r.creator).toStrictEqual(auction.creator)
@@ -29,9 +29,11 @@ describe('request to auction tool', () => {
     })
 
     test('validate auction struct', () => {
+        const r = requestToAuction(request)
         const [err, val] = s.validate(r, auctionStruct, {
             coerce: true, mask: true
         })
+
         expect(err).toBeUndefined()
         expect(val).toBeDefined()
     })
