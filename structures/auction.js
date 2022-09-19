@@ -1,11 +1,12 @@
 const s = require('superstruct')
 const Uuid = s.define('Uuid', require('is-uuid').v4)
 const Url = s.define('Url', require('is-url'))
-const {ZuluDateTimeStruct} = require('./lib');
+const { ZuluDateTimeStruct } = require('./lib');
 const GpsA = require('./lib').gpsarray(s)
 const GpsS = require('./lib').gpsstring(s)
-const {placeChecker} = require('./place')
+const { placeChecker } = require('./place')
 const {multistep, packageV2, packageV1} = require('./multistep')
+const { notes } = require('./notes');
 const Contact = require('./contact').auctionContact
 
 const Instance = process.env.NODE_APP_INSTANCE || 'DEMO'
@@ -75,7 +76,7 @@ exports.auction = function (config = null) {
         }),
         stackable: s.optional(s.enums(['yes', 'no', 'No', 'Yes', 0, 1])),
         distance: s.optional(s.union([s.number(), s.string()])),
-        notes: s.optional(s.size(s.string(), 2, 512)),
+        notes: notes,
         tags: s.defaulted(s.optional(s.array(s.string())), [])
     })
 
