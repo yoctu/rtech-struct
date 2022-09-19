@@ -243,10 +243,10 @@ describe('Request object structure', () => {
         expect(error).toBeUndefined()
     })
 
-    test('Request with order_type marketplace_spot', () => {
+    test('Request with order_type marketplace-spot', () => {
         request.order_type=
             {
-                'type': 'marketplace_spot',
+                'type': 'marketplace-spot',
                 'delegated_target': ['carrier1', 'carrier2'],
             }
 
@@ -255,10 +255,10 @@ describe('Request object structure', () => {
         expect(error).toBeUndefined()
     })
 
-    test('Request with order_type virtual_order', () => {
+    test('Request with order_type virtual-order', () => {
         request.order_type=
             {
-                'type': 'virtual_order'
+                'type': 'virtual-order'
             }
 
 

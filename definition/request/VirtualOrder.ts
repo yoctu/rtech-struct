@@ -1,5 +1,5 @@
 type VirtualOrder = {
-    type: 'virtual_order',
+    type: 'virtual-order',
 };
 
 export default VirtualOrder;
