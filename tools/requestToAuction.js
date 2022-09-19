@@ -97,6 +97,11 @@ const checkValidityTime = (time) => {
     }
 }
 
+/**
+ * Tool to transform request into auction.
+ * @param {Object} request - The request object.
+ * @param {Object} defaultOption - Object that contains default values for keys: company_name, name, email, phone
+ */
 const requestToAuction = (request, defaultOption = {}) => {
     return {
         key: request.key,
