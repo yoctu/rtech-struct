@@ -16,7 +16,7 @@ const { CustomerInterlocutor } = require('./customer_interlocutor')
 
 const Request = s.object({
     key: s.optional(NoEmptyString),
-    source: s.size(s.array(NoEmptyString), 1),
+    source: s.size(s.array(NoEmptyString), 1, 5),
     packages: s.size(s.array(Package), 0, 50),
     points: s.size(s.array(PartialPoint), 2, 20),
     transports: s.size(s.array(RequestedTransport), 1, 10),

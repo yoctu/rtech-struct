@@ -328,4 +328,11 @@ describe('Request object structure', () => {
         const [error, data] = s.validate(request, Request, { coerce: true })
         expect(error).toBeUndefined()
     })
+
+    test('Request multi source', () => {
+        request.source = ['S1', 'S2']
+
+        const [error, data] = s.validate(request, Request, { coerce: true })
+        expect(error).toBeUndefined()
+    })
 })
