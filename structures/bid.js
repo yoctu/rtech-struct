@@ -30,7 +30,7 @@ exports.bid = function (config = null, auction = null) {
       creator: s.size(s.string(), 2, 32),
       source: s.size(s.array(s.size(s.string(), 2, 64)), 0, 5),
       sourceComment: s.optional(s.size(s.array(s.size(s.string(), 2, 256)), 0, 8)),
-      target: s.size(s.array(s.size(s.string(), 2, 64)), 0, 1),
+      target: s.size(s.array(s.size(s.string(), 2, 64)), 0, 5),
       targetComment: s.optional(s.size(s.array(s.size(s.string(), 2, 256)), 0, 8)),
       targetRating: s.optional(s.size(s.number(), 0, 5)),
       bidRating: s.optional(s.size(s.number(), 0, 5)),
