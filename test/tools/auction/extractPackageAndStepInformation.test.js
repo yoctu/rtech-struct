@@ -151,11 +151,11 @@ test('Extract package v2 information', () => {
             'width': 120,
             'height': 120,
             'weight': 5,
-            'note': null,
+            'note': 'no',
             'stackable': 'no',
             'adrCode': '1,0088,1234',
             'value': '',
-            'insuranceCode': '',
+            'insuranceCode': null,
             'adr': {'class': '1', 'un_code': '0088', 'packing_group': '1234'}
         }],
         'extraCost': [],
