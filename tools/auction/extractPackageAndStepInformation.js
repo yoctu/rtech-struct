@@ -226,11 +226,11 @@ const extract = (auction) => {
           width: parseFloat(auction.dimension[2 + offset]),
           height: parseFloat(auction.dimension[3 + offset]),
           weight: parseFloat(auction.dimension[4 + offset]),
-          note: null,
+          note: stackable,
           stackable: stackable,
           adrCode: auction.dimension[6 + offset],
           value: auction.dimension[7 + offset],
-          insuranceCode: auction.dimension[8 + offset]
+          insuranceCode: null
         });
       }
     }
