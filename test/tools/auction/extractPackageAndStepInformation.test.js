@@ -151,7 +151,7 @@ test('Extract package v2 information', () => {
             'width': 120,
             'height': 120,
             'weight': 5,
-            'note': null,
+            'note': '',
             'stackable': 'no',
             'adrCode': '1,0088,1234',
             'value': '',
