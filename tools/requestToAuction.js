@@ -42,48 +42,67 @@ const pointInfo = (point, suffix, defaultOption) => {
 const dimension = (key, points, packages, defaultOption) => {
     let result = []
 
-    for (const p of packages) {
-        result.push(p.quantity.toString())
-        result.push(p.length.toString())
-        result.push(p.width.toString())
-        result.push(p.height.toString())
-        result.push(p.weight.toString())
-        result.push(p.comment || '')
-        result.push(p.stackable || '')
-        result.push(
-            p.adr ? (p.adr.class + ',' + p.adr.un_code + ',' + p.adr.packing_group) : ''
-        )
-        result.push(
-            p.goods_value ?  p.goods_value.value.toString() : ''
-        )
-        result.push('')
-        for (const point of points) {
-            if (point.package_to_load.includes(p.tracking_id) ||
-                point.package_to_unload.includes(p.tracking_id)) {
-                result.push(key + '-' + point.key)
-                result.push(
-                    (point.address.street || '') +
-                    (point.address.additional_street ? '\n' + point.address.additional_street : '')
-                )
-                result.push(point.address.zip_code)
-                result.push(point.address.city)
-                result.push(point.address.country)
-                result.push(point.address.country)
-                result.push(
-                    point.address.position.lat.toString() +
-                    ',' +
-                    point.address.position.lon.toString()
-                )
-                result.push(point.address.timezone_string)
-                result.push(point.contact.company_name || defaultOption.company_name)
-                result.push(point.contact.name || defaultOption.name)
-                result.push(point.contact.email || defaultOption.email)
-                result.push(point.contact.phone || defaultOption.phone)
-                result.push(point.arrival_from)
-                result.push(point.arrival_until)
+    if (points.length <= 2) {
+        for (const p of packages) {
+            result.push(packages.length.toString())
+            result.push(p.length.toString())
+            result.push(p.width.toString())
+            result.push(p.height.toString())
+            result.push(p.weight.toString())
+            result.push(p.comment || '')
+            result.push(
+                p.adr ? (p.adr.class + ',' + p.adr.un_code + ',' + p.adr.packing_group) : ''
+            )
+            result.push(
+                p.goods_value ?  p.goods_value.value.toString() : ''
+            )
+            result.push('')
+        }
+    } else {
+        for (const p of packages) {
+            result.push(p.quantity.toString())
+            result.push(p.length.toString())
+            result.push(p.width.toString())
+            result.push(p.height.toString())
+            result.push(p.weight.toString())
+            result.push(p.comment || '')
+            result.push(p.stackable || '')
+            result.push(
+                p.adr ? (p.adr.class + ',' + p.adr.un_code + ',' + p.adr.packing_group) : ''
+            )
+            result.push(
+                p.goods_value ?  p.goods_value.value.toString() : ''
+            )
+            result.push('')
+            for (const point of points) {
+                if (point.package_to_load.includes(p.tracking_id) ||
+                    point.package_to_unload.includes(p.tracking_id)) {
+                    result.push(key + '-' + point.key)
+                    result.push(
+                        (point.address.street || '') +
+                        (point.address.additional_street ? '\n' + point.address.additional_street : '')
+                    )
+                    result.push(point.address.zip_code)
+                    result.push(point.address.city)
+                    result.push(point.address.country)
+                    result.push(point.address.country)
+                    result.push(
+                        point.address.position.lat.toString() +
+                        ',' +
+                        point.address.position.lon.toString()
+                    )
+                    result.push(point.address.timezone_string)
+                    result.push(point.contact.company_name || defaultOption.company_name)
+                    result.push(point.contact.name || defaultOption.name)
+                    result.push(point.contact.email || defaultOption.email)
+                    result.push(point.contact.phone || defaultOption.phone)
+                    result.push(point.arrival_from)
+                    result.push(point.arrival_until)
+                }
             }
         }
     }
+
     return result
 }
 
@@ -114,7 +133,7 @@ const requestToAuction = (request, defaultOption = {}) => {
         creator: request.creator,
         source: request.source,
         distance: calcDistance(request.transports),
-        options: ['MULTISTEP'],
+        options: request.points.length <= 2 ? ['PKG_V2'] : ['MULTISTEP'],
         ...pointInfo(request.points.find((point) => point.key === 'A'), 'pu', defaultOption),
         ...pointInfo(request.points.find((point) => point.key === 'B'), 'de', defaultOption),
         dimension: dimension(request.key, request.points, request.packages, defaultOption),
