@@ -47,4 +47,74 @@ describe('request to auction tool', () => {
         expect(err).toBeUndefined()
         expect(val).toBeDefined()
     })
+
+    test('validate auction struct with PKG_V2', () => {
+        const copyRequest = request
+
+        copyRequest.points = [
+            {
+                "key": "A",
+                "arrival_from": "2022-09-15T16:30:00.000Z",
+                "arrival_until": "2022-09-15T20:30:00.000Z",
+                "address": {
+                    "city": "Nancy",
+                    "country": "FR",
+                    "zip_code": "54000",
+                    "timezone_string": "Europe/Paris",
+                    "street": "31 rue de la colline",
+                    "position": {
+                        "lat": 48.6987,
+                        "lon": 6.1597
+                    }
+                },
+                "contact": {
+                    "name": "Flynn",
+                    "company_name": "test comma",
+                    "phone": "+330102030405",
+                    "email": "test@test.com"
+                },
+                "package_to_load": [
+                    "c520bb79-77e6-4b0a-81f9-38dd041378e9"
+                ],
+                "package_to_unload": []
+            },
+            {
+                "key": "B",
+                "arrival_from": "2022-09-16T12:45:00.000Z",
+                "arrival_until": "2022-09-16T16:45:00.000Z",
+                "address": {
+                    "city": "Nantes",
+                    "country": "FR",
+                    "zip_code": "44000",
+                    "timezone_string": "Europe/Paris",
+                    "street": "10 Rue de Strasbourg",
+                    "position": {
+                        "lat": 47.216,
+                        "lon": -1.551
+                    }
+                },
+                "contact": {
+                    "name": "4353425435",
+                    "phone": "+352234234"
+                },
+                "package_to_load": [],
+                "package_to_unload": [
+                    "4085a92f-bedc-4065-a2f0-6350f8eeb3d2"
+                ]
+            }
+        ]
+
+        const r = requestToAuction(copyRequest, {
+            company_name: 'John',
+            name: 'Doe',
+            email: 'todoemail@mail.fr',
+            phone: '+333333333',
+        })
+        const [err, val] = s.validate(r, auctionStruct, {
+            coerce: true, mask: true
+        })
+
+        expect(err).toBeUndefined()
+        expect(val).toBeDefined()
+    })
 })
