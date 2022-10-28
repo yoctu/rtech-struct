@@ -27,6 +27,7 @@ exports.bid = function (config = null, auction = null) {
       reported_at: ZuluDateTimeStruct,
       archived_at: s.optional(ZuluDateTimeStruct),
       valid_until: ZuluDateTimeStruct,
+      options: s.optional(s.array(s.enums(['ALLOW_EXTEND_ON_EXPIRED']))),
       creator: s.size(s.string(), 2, 32),
       source: s.size(s.array(s.size(s.string(), 2, 64)), 0, 5),
       sourceComment: s.optional(s.size(s.array(s.size(s.string(), 2, 256)), 0, 8)),
@@ -80,6 +81,7 @@ exports.bid = function (config = null, auction = null) {
     deDate: auction && auction.deDate ? auction.deDate : new Date().toISOString(),
     deDateRange: auction && auction.deDateRange ? auction.deDateRange : new Date().toISOString(),
     validatorEmails: Validatoremail,
-    logo: Logo
+    logo: Logo,
+    options: []
   })
 }

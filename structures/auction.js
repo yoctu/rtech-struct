@@ -33,7 +33,7 @@ exports.auction = function (config = null) {
         waybills: s.optional(s.size(s.string(), 8, 256)),
         creator: s.size(s.string(), 2, 32),
         visible: s.enums(['public', 'private']),
-        options: s.optional(s.array(s.enums(['SHAQUPLOAD', 'BIDUPLOAD', 'AUTOINVITE', 'BIDCOMMENT', 'NOCHAT', 'LITE', 'PRICE_DETAIL', 'SHOW_CONTACT', 'PKG_V1', 'PKG_V2', 'MULTISTEP', 'CLOSE_AFTER_DECISION_FROM', 'SECRET_GETITNOW']))),
+        options: s.optional(s.array(s.enums(['SHAQUPLOAD', 'BIDUPLOAD', 'AUTOINVITE', 'BIDCOMMENT', 'NOCHAT', 'LITE', 'PRICE_DETAIL', 'SHOW_CONTACT', 'PKG_V1', 'PKG_V2', 'MULTISTEP', 'CLOSE_AFTER_DECISION_FROM', 'SECRET_GETITNOW', 'ALLOW_EXPIRED_BID_EXTENSION']))),
         source: s.size(s.array(s.size(s.string(), 2, 64)), 0, 5),
         target: s.size(s.array(s.size(s.string(), 2, 64)), 0, RelsMax),
         targetStatus: s.optional(s.size(s.array(s.enums(['', 'Removed', 'Disabled', 'Searching', 'NoSolution'])), 0, RelsMax)),

@@ -10,6 +10,7 @@ type Bid = {
     creator: string,
     source: string[],
     sourceComment?: string[],
+    options?: Array<'ALLOW_EXTEND_ON_EXPIRED'>,
     target: [],
     targetComment?: string[],
     targetRating: number,
